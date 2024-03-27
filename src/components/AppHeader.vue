@@ -13,7 +13,8 @@ export default {
 
 <template>
     <header>
-        HEADER
+       <router-link :to="{name: 'Home-page'}"> Home </router-link>
+       <router-link :to="{name: 'advanced-search'}"> Ricerca avanzata</router-link>
     </header>
 </template>
 

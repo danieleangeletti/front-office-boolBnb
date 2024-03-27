@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import HomePage from './pages/HomePage.vue';
+import AdvancedSearch from './pages/AdvancedSearch.vue'
 
 
 const router = createRouter({
@@ -6,20 +8,15 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "WelcomeApp",
-      component: WelcomeApp,
+      name: "Home-page",
+      component: HomePage,
     },
     {
-      path: "/ShowProject/:slug",
-      name: "show-project",
-      component: ShowProject,
+      path: "/pages/AdvancedSearch",
+      name: "advanced-search",
+      component: AdvancedSearch,
     },
 
-    {
-      path: "/Project/index",
-      name: "project-index",
-      component: ProjectIndex,
-    },
   ],
 });
 
