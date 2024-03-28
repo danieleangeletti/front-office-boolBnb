@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomePage from './pages/HomePage.vue';
+import HomePage from './App.vue';
 import AdvancedSearch from './pages/AdvancedSearch.vue'
 
 
