@@ -21,9 +21,6 @@ export default {
 
 <template>
    
-    <AppHeader />
-
-    <AppFooter />
 </template>
 
 <style lang="scss" scoped>

@@ -1,15 +1,26 @@
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            
+            userSearch:''
         };
     },
     methods: {
-
+        searchApartment(){
+            axios.get('http://localhost:8000/api/apartments',{
+                params:{
+                   
+                }
+            })
+            .then(response=>{
+                console.log(response)
+            });
+        }
     }
 }
 </script>
+            
 
 
 <template>
@@ -23,11 +34,17 @@ export default {
                 </div>
             </div>
             <div class="col">
-                <a class="router-link mx-3" href="../App.vue"> Home </a>
-                <a class="router-link mx-3" href="../pages/AdvancedSearch.vue"> Ricerca avanzata</a>
+                <router-link class="router-link" :to="{name: 'Home-page'}">Home</router-link>
+                <router-link class="router-link" :to="{name: 'advanced-search'}">Ricerca avanzata</router-link>
             </div>
             <div class="col">
                 login Placeholder
+            </div>
+            <div class="col-12">
+                <form  @subtmit.prevent action="">
+                    <input v-model="userSearch" type="text">
+                    <button @click="searchApartment" class="btn btn-outline-dark m-2 "> cerca</button>
+                </form>
             </div>
         </div>
 

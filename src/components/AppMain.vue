@@ -13,7 +13,7 @@ export default {
 
 <template>
     <main>
-        MAIN
+        <router-view></router-view>
     </main>
 </template>
 
