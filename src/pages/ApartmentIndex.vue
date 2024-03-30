@@ -18,8 +18,8 @@ export default {
             })
             .then(response=>{
                 this.store.apartments = response.data.result;
-                console.log(this.apartments)
-                console.log(response)
+                // console.log(this.apartments)
+                // console.log(response)
             })
         },
     },

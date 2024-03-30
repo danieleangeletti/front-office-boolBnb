@@ -1,22 +1,85 @@
 <script>
 import axios from 'axios';
+import { store } from "../../store.js";
 export default {
     data() {
         return {
-            userSearch:''
+            userSearch:'',
+            store,
+            firstApi: null,
+            appartmentLat : [],
+            appartmentLon : [],
+            poilist :[],
+            jsonPoilist: null
+            
         };
     },
     methods: {
         searchApartment(){
-            axios.get('http://localhost:8000/api/apartments',{
+            for(let i = 0; i< 20; i++){
+                if(this.store.apartments[i].latitude && this.store.apartments[i].longitude != null ){
+
+                    this.appartmentLat.push(this.store.apartments[i].latitude) 
+                    this.appartmentLon.push(this.store.apartments[i].longitude)  
+                }
+            }
+            // console.log(this.store.apartments)
+            // console.log(this.appartmentLat)
+            // console.log(this.appartmentLon)
+
+               axios.get('https://api.tomtom.com/search/2/geocode/.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct',{
                 params:{
-                   
+                    query: this.userSearch
                 }
             })
-            .then(response=>{
-                console.log(response)
-            });
-        }
+            .then(responseOne=>{
+                //  console.log('usersearch'+ this.userSearch)
+                //  console.log( responseOne.data )
+                this.firstApi =  responseOne.data.results[0].position
+                  console.log(this.firstApi)
+                 
+                for (let i = 0; i < 20; i++) {
+                      if(this.store.apartments[i].latitude && this.store.apartments[i].longitude != null ){
+                        
+                          this.poilist.push({
+                                "poi": 
+                                {
+                                 
+                                     "name": this.store.apartments[i].name
+                                 },
+                                 "address": {
+                                     "freeformAddress": this.store.apartments[i].address
+                                },
+                               "position": {
+                                   "lat": this.store.apartments[i].latitude,
+                                   "lon": this.store.apartments[i].longitude
+                               }
+                           });
+                      }  
+                }
+                this.jsonPoilist = JSON.stringify(this.poilist)
+                console.log( this.jsonPoilist , typeof this.jsonPoilist)
+                  axios.get(`https://api.tomtom.com/search/2/geometryFilter.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct`,{
+                 params:{
+                    geometryList:{
+                         "type": "CIRCLE",
+                         "position": `${this.firstApi.lat} , ${this.firstApi.lon}`,
+                         "radius": 20000
+                    },
+                    poilist: this.jsonPoilist
+                     
+                     
+                    }
+                        
+                       })
+                       .then(response=>{
+                         
+                        //    console.log(response.data)
+                         });
+          })
+                      
+    }
+           
     }
 }
 </script>
@@ -41,7 +104,7 @@ export default {
                 login Placeholder
             </div>
             <div class="col-12">
-                <form  @subtmit.prevent action="">
+                <form  @submit.prevent>
                     <input v-model="userSearch" type="text">
                     <button @click="searchApartment" class="btn btn-outline-dark m-2 "> cerca</button>
                 </form>
