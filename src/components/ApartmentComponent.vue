@@ -16,12 +16,12 @@ export default {
 
 <template>
     
-    <div class="card">
+    <div class="my-card">
         <router-link class="link" :to="{name:'apartment-show', params: { slug: apartment.slug }}">
             <div class="img-box">
-                <img :src="apartment.img_cover_path" alt="Cover Image">
+                <img :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
             </div>
-            <ul class="p-0">
+            <ul class="p-0 d-block">
                 <li>
                     {{ apartment.name }}
                 </li>
@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
-.card{
+.my-card{
     width: calc(100% / 6 );
     margin-top: 50px;
     padding: 20px;
@@ -53,10 +53,12 @@ export default {
         text-decoration: underline;
     }
     .img-box{
+        height: 300px;
         img{
             border-radius:20px;
             width: 100%;
             height: 100%;
+            object-fit: cover;
         }
     }
     ul{
