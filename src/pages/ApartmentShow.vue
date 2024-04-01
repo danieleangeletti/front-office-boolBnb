@@ -9,28 +9,28 @@ export default {
         };
     },
         methods: {
-        sendMessage() {
-            // Esegui la chiamata API POST
-            axios.post('http://localhost:5174/',
-            {
-             message: this.message,
-            },
-            {
-            headers: {
-                "content-type": "multipart/form-data",
-            },
-            }
+         sendMessage() {
+             // Esegui la chiamata API POST
+             axios.post('http://127.0.0.1:8000/',
+             {
+              message: this.message,
+             },
+             {
+             headers: {
+                 "content-type": "multipart/form-data",
+             },
+             }
             
-             )
-                .then(response => {
-                    // Gestisci la risposta dal backend
-                    console.log('Risposta dal backend:', response.data);
-                })
-                .catch(error => {
-                    // Gestisci gli errori
-                    console.error('Errore nella chiamata API:', error);
-                });
-        }},
+              )
+                 .then(response => {
+                     // Gestisci la risposta dal backend
+                     console.log('Risposta dal backend:', response.data);
+                 })
+                 .catch(error => {
+                     // Gestisci gli errori
+                     console.error('Errore nella chiamata API:', error);
+                 });}
+            },
   created() {
     axios
       .get(`http://localhost:8000/api/apartments/${this.$route.params.slug}`)
