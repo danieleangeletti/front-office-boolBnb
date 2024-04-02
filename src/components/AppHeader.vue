@@ -66,7 +66,7 @@ export default {
           console.log(this.jsonPoilist)
           console.log(this.firstApi.lat, this.firstApi.lon , typeof this.firstApi.lat ,typeof this.firstApi.lon)
           axios
-            .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.firstApi.lat +', '+ this.firstApi.lon+ '", "radius":2000000}]', {
+            .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.firstApi.lat +', '+ this.firstApi.lon+ '", "radius":20000}]', {
               params: {
                 key: "uQKNMTMSFoV1bSWi015M9fIPIvXFMwfK",
                 //  geometryList: [
