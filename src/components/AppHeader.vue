@@ -11,6 +11,7 @@ export default {
       appartmentLon: [],
       poilist: [],
       jsonPoilist: null,
+      apartmentName: []
     };
   },
   methods: {
@@ -24,9 +25,6 @@ export default {
           this.appartmentLon.push(this.store.apartments[i].longitude);
         }
       }
-      // console.log(this.store.apartments)
-      // console.log(this.appartmentLat)
-      // console.log(this.appartmentLon)
 
       axios
         .get(
@@ -38,7 +36,7 @@ export default {
           }
         )
         .then((responseOne) => {
-          console.log(responseOne)
+          // console.log(responseOne)
           this.firstApi = responseOne.data.results[0].position;
 
           for (let i = 0; i < 20; i++) {
@@ -63,29 +61,55 @@ export default {
           // via monte napoleone milano
 
           this.jsonPoilist = JSON.stringify(this.poilist);
-          console.log(this.jsonPoilist)
-          console.log(this.firstApi.lat, this.firstApi.lon , typeof this.firstApi.lat ,typeof this.firstApi.lon)
+          // console.log(this.jsonPoilist)
+          // console.log(this.firstApi.lat, this.firstApi.lon , typeof this.firstApi.lat ,typeof this.firstApi.lon)
           axios
             .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.firstApi.lat +', '+ this.firstApi.lon+ '", "radius":20000}]', {
               params: {
                 key: "uQKNMTMSFoV1bSWi015M9fIPIvXFMwfK",
-                //  geometryList: [
-                //    {
-                //      "type": "CIRCLE",
-                //      "position": `${this.firstApi.lat}, ${this.firstApi.lon}`,
-                //      "radius": 100,
-                //    },
-                //  ],
+
                 poiList: this.jsonPoilist
               },
             })
-            .then((response) => {
-              console.log(response.data);
+            .then((responseThree) => {
+              
+              let myData = responseThree.data.results;
+              for(let i = 0; i < myData.length ; i ++){
+                this.apartmentName.push(myData[i]['poi'].name) 
+              }
+              console.log(this.apartmentName)
+                  axios
+               .get('http://localhost:8000/api/getApartments',{
+                   params:{
+                      allName : this.apartmentName
+                   }
+               })
+               .then(response=>{
+                console.log(response)
+                this.store.FilteredApartments = response.data.result;
+                this.store.apartments = [];
+               })
             });
         });
     },
+      callTheApartments(){
+            axios
+            .get('http://localhost:8000/api/apartments',{
+                params:{
+                   
+                }
+            })
+            .then(response=>{
+                this.store.apartments = response.data.result;
+                this.store.FilteredApartments = []
+                console.log('ciao')
+            })
+        },
   },
 };
+  
+              
+                
 </script>
 
 <template>
@@ -97,8 +121,11 @@ export default {
         </div>
       </div>
       <div class="col">
-        <router-link class="router-link" :to="{ name: 'Home-page' }"
-          >Home</router-link
+        <router-link class="router-link"   :to="{ name: 'Home-page' }"
+          >
+          <span @click="callTheApartments()">Home
+          </span>
+          </router-link
         >
         <router-link class="router-link" :to="{ name: 'advanced-search' }"
           >Ricerca avanzata</router-link

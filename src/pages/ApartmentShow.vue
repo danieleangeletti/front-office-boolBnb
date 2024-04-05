@@ -52,7 +52,7 @@ export default {
             <div class="col">
                 <div class="card">
                     <div class="img-box">
-                        <img :src="apartment.img_cover_path" alt="Cover Image">
+                        <img :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
                     </div>
                     <ul class="p-0">
                         <li>
@@ -65,7 +65,7 @@ export default {
                 </div>
             </div>
             <div class="col">
-                <form @submit.prevent action="">
+                <form @submit.prevent method="post">
                     <label for="message">
                         Scrivi un messaggio all'host
                     </label>
