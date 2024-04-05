@@ -1,5 +1,6 @@
 <script>
 import ApartmentComponent from '../components/ApartmentComponent.vue';
+import FilteredApartmentComponent from '../components/FilteredApartmentComponent.vue';
 import axios from 'axios';
 import { store } from "../../store.js";
 export default {
@@ -24,7 +25,8 @@ export default {
         },
     },
     components:{
-        ApartmentComponent
+        ApartmentComponent,
+        FilteredApartmentComponent
     },
     mounted(){
         this.callTheApartments();
@@ -35,8 +37,11 @@ export default {
 <template>
     <div class="container-fluid">
             <div class="row">
-                <div class="col d-flex flex-wrap">
+                <div v-if="store.FilteredApartments.length === 0" class="col d-flex flex-wrap">
                     <ApartmentComponent  v-for="(elem,i) in store.apartments" :apartment="elem" :key="i"/>
+                </div>
+                <div v-if="store.FilteredApartments.length != 0" class="col d-flex flex-wrap">
+                    <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
                 </div>
             </div>
         </div>
