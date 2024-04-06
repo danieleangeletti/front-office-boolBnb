@@ -120,25 +120,25 @@ export default {
 
 <template>
     <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <form @submit.prevent>
-                        <div class="d-flex justify-content-center">
-                            <input v-model="userSearch" type="text" />
-                            <button @click="searchApartment" class="btn btn-outline-dark m-2">
-                                SEARCH
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div v-if="store.FilteredApartments.length === 0" class="col d-flex flex-wrap">
-                    <ApartmentComponent  v-for="(elem,i) in store.apartments" :apartment="elem" :key="i"/>
-                </div>
-                <div v-if="store.FilteredApartments.length != 0" class="col d-flex flex-wrap">
-                    <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <form @submit.prevent>
+              <div class="d-flex justify-content-center">
+                  <input v-model="userSearch" type="text" />
+                  <button @click="searchApartment" class="btn btn-outline-dark m-2">
+                      SEARCH
+                  </button>
+              </div>
+          </form>
         </div>
+        <div v-if="store.FilteredApartments.length === 0" class="col d-flex flex-wrap">
+          <ApartmentComponent  v-for="(elem,i) in store.apartments" :apartment="elem" :key="i"/>
+        </div>
+        <div v-if="store.FilteredApartments.length != 0" class="col d-flex flex-wrap">
+          <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
+        </div>
+      </div>
+    </div>
 </template>
 
 <style lang="scss" scoped>
