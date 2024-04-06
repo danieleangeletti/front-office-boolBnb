@@ -18,7 +18,6 @@ export default {
             .then(response=>{
                 this.store.apartments = response.data.result;
                 this.store.FilteredApartments = []
-                console.log('ciao')
             })
         },
   },
@@ -32,8 +31,8 @@ export default {
   <header class="container-fluid text-center">
     <div class="row justify-content-between align-items-center h-100">
       <div class="col">
-        <div class="img-box">
-          <img src="" alt="logo BoolBnb" />
+        <div class="img-box w-100">
+          <img src="../../public/img/logo.jpg" alt="logo BoolBnb" />
         </div>
       </div>
       <div class="col">
@@ -58,11 +57,21 @@ export default {
 header {
   height: 10vh;
   border-bottom: 1px solid lightgrey;
+  background-color: white;
+  position: fixed;
   .router-link {
     padding: 1rem 2rem;
     color: #717171;
     text-decoration: none;
     border-radius: 30px;
+  }
+  .img-box{
+    height: 9vh;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 }
 </style>

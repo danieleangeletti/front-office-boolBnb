@@ -4,6 +4,7 @@ import { store } from '../../store';
 import AppHeader from '../components/AppHeader.vue';
 import AppMain from '../components/AppMain.vue';
 import AppFooter from '../components/AppFooter.vue';
+import FilteredApartmentComponent from '../components/FilteredApartmentComponent.vue';
 export default {
     data() {
         return {
@@ -28,13 +29,50 @@ export default {
             })
             .then(response=>{
                 this.store.services = response.data.result;
-                console.log(this.store.services)
+            });
+        },
+        searchApartmentAdvanced() {
+
+            this.store.FilteredApartments = []
+            let UserRadiusInMeters = this.radius * 1000
+            
+            axios
+            .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.store.firstApi.lat +', '+ this.store.firstApi.lon+ '", "radius":'+UserRadiusInMeters+'}]', {
+                params: {
+                key: "uQKNMTMSFoV1bSWi015M9fIPIvXFMwfK",
+
+                poiList: this.store.jsonPoilist
+                },
+            })
+            .then((TomTomresponse) => {
+                this.store.apartmentName = []
+                console.log('risposta api tomtom',TomTomresponse)
+                let myData = TomTomresponse.data.results;
+                console.log('my data',myData)
+                for(let i = 0; i < myData.length ; i ++){
+                this.store.apartmentName.push(myData[i]['poi'].name) 
+                }
+                    axios
+                    .get('http://localhost:8000/api/advancedResearch',{
+                        params:{
+                            allName : this.store.apartmentName,
+                            nRooms: this.nRooms,
+                            nBeds: this.nBeds
+                        }
+                    })
+                    .then(response=>{
+                        this.store.FilteredApartments = response.data.result;
+                        console.log(this.store.FilteredApartments)
+                    })
             });
         },
     },
     mounted(){
         this.callTheServices();
-    }
+    }, 
+    components:{
+        FilteredApartmentComponent
+    },
 }
 </script>
 
@@ -43,27 +81,33 @@ export default {
       <div class="row">
         <div class="col-12">
             <div class="mt-3 mb-3 d-flex justify-content-center">
-                <input v-model="nRooms" class="form-control w-50" placeholder="Minimum number of rooms"></input>
+                <input v-model="nRooms" class="form-control w-50" placeholder="Minimum number of rooms">
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <input v-model="nBeds" class="form-control w-50" placeholder="Minimum number of beds"></input>
+                <input v-model="nBeds" class="form-control w-50" placeholder="Minimum number of beds">
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="0" max="50" step="0.5">
+                <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="1" max="300" step="1">
                 <div>{{ radius }} km</div>
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <div v-for="(elem, i) in store.services"  class="form-check me-3">
+                <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
                     <input class="form-check-input" type="checkbox" :value="elem.type_of_service" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         {{ elem.type_of_service }}
                     </label>
-                </div>
+                </div> 
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <button type="submit" class="btn btn-outline-dark m-2">
+                <button @click="searchApartmentAdvanced" type="submit" class="btn btn-outline-dark m-2">
                     SEARCH
                 </button>
+            </div>
+        </div>
+        <div class="col-12">
+            
+            <div v-if="store.FilteredApartments.length != 0" class="col d-flex flex-wrap">
+                <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
             </div>
         </div>
       </div>

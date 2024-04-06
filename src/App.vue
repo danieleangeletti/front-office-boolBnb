@@ -21,13 +21,17 @@ export default {
 <template>
 
     <AppHeader />
-       <AppMain />
+
+    <AppMain />
+
     <AppFooter />
+
 </template>
         
 
 <style lang="scss">
     @use "assets/scss/main" as *;
     @import "assets/scss/partials/reset";
+   
 </style>
 
