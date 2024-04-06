@@ -13,14 +13,19 @@ export default {
     methods: {
         callTheApartmentsNormal(){
             axios
-            .get('http://localhost:8000/api/apartments',{
+             //faccio la prima chiamata al mio backend per ricevere tutti gli appartamenti del database
+            .get('http://localhost:8000/api/apartments',{               
                 params:{
                    
                 }
             })
             .then(response=>{
+              //Inserisco la risposta in una variabile nello store
                 this.store.apartments = response.data.result;
-                 for (let i = 0; i < 20; i++) {
+
+              //Preparo una lista di appartamenti (in questo caso 25 perchè tomtom non vuole strighe troppo lunghe)
+              //nel formato specificato nella documentazione di tomtom
+                 for (let i = 0; i < 25; i++) {
                 if (
                   this.store.apartments[i].latitude &&
                   this.store.apartments[i].longitude != null
@@ -39,23 +44,14 @@ export default {
                   });
                 }
               }
-              // via monte napoleone milano
-
+              //trasformo la lista di POI creata in precedenza in una stringa JSON
               this.store.jsonPoilist = JSON.stringify(this.store.poilist);
             })
         },
         searchApartment() {
-          for (let i = 0; i < 20; i++) {
-            if (
-              this.store.apartments[i].latitude &&
-              this.store.apartments[i].longitude != null
-            ) {
-              this.store.appartmentLat.push(this.store.apartments[i].latitude);
-              this.store.appartmentLon.push(this.store.apartments[i].longitude);
-            }
-          }
 
           axios
+           // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine                           
             .get(
               "https://api.tomtom.com/search/2/geocode/.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
               {
@@ -67,7 +63,9 @@ export default {
             .then((responseOne) => {
               this.store.firstApi = responseOne.data.results[0].position;
 
-             
+            //Faccio la seconda chiamata a tomtom dove specifico: 1-tipo di figura geometrica da usare come forma per il filtraggio
+                    //                                            2-chiave API personale presa dal sito di tomtom
+                    //                                            3-La lista di Appartamenti da filtrare in formato JSON
               axios
                 .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.store.firstApi.lat +', '+ this.store.firstApi.lon+ '", "radius":20000}]', {
                   params: {
@@ -79,16 +77,19 @@ export default {
                 .then((responseThree) => {
                   
                   let myData = responseThree.data.results;
+                //  Dichiaro e uso una variabile dove pusho tutti i nomi presi dalla risposta alla precedente chiamata api di tomtom
                   for(let i = 0; i < myData.length ; i ++){
                     this.store.apartmentName.push(myData[i]['poi'].name) 
                   }
-                      axios
+              axios
+                // Faccio una terza chiamata, questa volta al mio backend, che mi cerchera nel database gli appartamenti che corrispondono a quei nomi      
                   .get('http://localhost:8000/api/getApartments',{
                       params:{
                           allName : this.store.apartmentName
                       }
                   })
                   .then(response=>{
+                // Inserisco    
                     this.store.FilteredApartments = response.data.result;
                   })
                 });
