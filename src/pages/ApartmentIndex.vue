@@ -20,7 +20,7 @@ export default {
             })
             .then(response=>{
                 this.store.apartments = response.data.result;
-                 for (let i = 0; i < 30; i++) {
+                 for (let i = 0; i < 20; i++) {
                 if (
                   this.store.apartments[i].latitude &&
                   this.store.apartments[i].longitude != null
@@ -45,7 +45,7 @@ export default {
             })
         },
         searchApartment() {
-          for (let i = 0; i < 30; i++) {
+          for (let i = 0; i < 20; i++) {
             if (
               this.store.apartments[i].latitude &&
               this.store.apartments[i].longitude != null

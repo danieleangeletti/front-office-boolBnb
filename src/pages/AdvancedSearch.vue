@@ -12,6 +12,7 @@ export default {
             nRooms: '',
             nBeds: '',
             radius: '',
+            services: [],
         };
     },
     components: {
@@ -57,13 +58,15 @@ export default {
                         params:{
                             allName : this.store.apartmentName,
                             nRooms: this.nRooms,
-                            nBeds: this.nBeds
+                            nBeds: this.nBeds,
+                            services: this.services
                         }
                     })
                     .then(response=>{
                         this.store.FilteredApartments = response.data.result;
                         console.log(this.store.FilteredApartments)
                     })
+            console.log(this.services);
             });
         },
     },
@@ -92,7 +95,7 @@ export default {
             </div>
             <div class="mb-3 d-flex justify-content-center">
                 <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
-                    <input class="form-check-input" type="checkbox" :value="elem.type_of_service" id="flexCheckDefault">
+                    <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         {{ elem.type_of_service }}
                     </label>
