@@ -32,47 +32,28 @@ export default {
                 this.store.services = response.data.result;
             });
         },
-        searchApartmentAdvanced() {
-
-            this.store.FilteredApartments = []
-            let UserRadiusInMeters = this.radius * 1000
-            
+        advancedResearch(){
             axios
-            .get('https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"'+ this.store.firstApi.lat +', '+ this.store.firstApi.lon+ '", "radius":'+UserRadiusInMeters+'}]', {
-                params: {
-                key: "uQKNMTMSFoV1bSWi015M9fIPIvXFMwfK",
-
-                poiList: this.store.jsonPoilist
-                },
-            })
-            .then((TomTomresponse) => {
-                this.store.apartmentName = []
-                console.log('risposta api tomtom',TomTomresponse)
-                let myData = TomTomresponse.data.results;
-                console.log('my data',myData)
-                for(let i = 0; i < myData.length ; i ++){
-                this.store.apartmentName.push(myData[i]['poi'].name) 
-                }
-                    axios
-                    .get('http://localhost:8000/api/advancedResearch',{
-                        params:{
-                            allName : this.store.apartmentName,
-                            nRooms: this.nRooms,
-                            nBeds: this.nBeds,
-                            services: this.services
-                        }
-                    })
-                    .then(response=>{
-                        this.store.FilteredApartments = response.data.result;
-                        console.log(this.store.FilteredApartments)
-                    })
-            console.log(this.services);
-            });
-        },
+        // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
+        .get(
+          "http://localhost:8000/api/advancedResearch",
+          {
+            params: {
+              lat: this.store.firstApi.lat,
+              lon: this.store.firstApi.lon,
+              nRooms: this.nRooms,
+              nBeds: this.nBeds,
+              distance: this.radius
+            }
+          }
+        ).then((response) => {
+            this.store.FilteredApartments = response.data.result;
+        })
+        }
     },
     mounted(){
         this.callTheServices();
-    }, 
+    },
     components:{
         FilteredApartmentComponent
     },
@@ -102,15 +83,17 @@ export default {
                 </div> 
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <button @click="searchApartmentAdvanced" type="submit" class="btn btn-outline-dark m-2">
+                <button @click="advancedResearch()" type="submit" class="btn btn-outline-dark m-2">
                     SEARCH
                 </button>
             </div>
         </div>
         <div class="col-12">
-            
-            <div v-if="store.FilteredApartments.length != 0" class="col d-flex flex-wrap">
+            <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap">
                 <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
+            </div>
+            <div v-else>
+                non ci sono appartamenti in questa posizione
             </div>
         </div>
       </div>

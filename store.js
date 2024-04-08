@@ -6,9 +6,6 @@ export const store = reactive({
   services: [],
   userSearch: "",
   firstApi: null,
-  poilist: [],
-  jsonPoilist: null,
-  apartmentName: [],
   isChecked: false,
   sponsoredApartments: [],
   notSponsoredApartments:[]
