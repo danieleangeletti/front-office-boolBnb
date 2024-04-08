@@ -11,7 +11,7 @@ export default {
             store,
             nRooms: '',
             nBeds: '',
-            radius: '',
+            radius: 20,
             services: [],
         };
     },
@@ -71,13 +71,13 @@ export default {
                 <input v-model="nBeds" class="form-control w-50" placeholder="Minimum number of beds">
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="1" max="300" step="1">
+                <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="1" max="300" step="1" >
                 <div>{{ radius }} km</div>
             </div>
             <div class="mb-3 d-flex justify-content-center">
                 <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
-                    <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
+                    <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
+                    <label class="form-check-label" :for="elem.id">
                         {{ elem.type_of_service }}
                     </label>
                 </div> 
