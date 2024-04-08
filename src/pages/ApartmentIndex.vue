@@ -83,9 +83,9 @@ export default {
                         suggestion.classList.add('suggestion-list')
                         suggestion.textContent = result.address.freeformAddress;
                         suggestion.addEventListener("click", function() {
-                           store.userSearch = result.address.freeformAddress;
-                            suggestionsContainer.innerHTML = "";
-                            store.isChecked = true
+                          store.userSearch = result.address.freeformAddress;
+                          suggestionsContainer.innerHTML = "";
+                          store.isChecked = true
                         });
                         suggestionsContainer.appendChild(suggestion);
                     });
@@ -177,7 +177,7 @@ export default {
         
         
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @use "../assets/scss/main" as *;
 .user-search {
   width: 400px;

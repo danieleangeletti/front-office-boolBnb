@@ -59,6 +59,7 @@ header {
   border-bottom: 1px solid lightgrey;
   background-color: white;
   position: fixed;
+  z-index: 2;
   .router-link {
     padding: 1rem 2rem;
     color: #717171;
