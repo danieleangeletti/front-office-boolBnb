@@ -4,12 +4,14 @@ export default {
   data() {
     return {
       apartment: null,
-
+      flag:false,
+      backendMessage: null,
       message: {
         name: null,
         last_name: null,
         text: null,
         email: null,
+        
       },
   };
 },
@@ -35,6 +37,15 @@ export default {
         .then((response) => {
           // Gestisci la risposta dal backend
           console.log("Risposta dal backend:", response.data);
+            if(response.data.success == true){
+              this.message.name = null,
+              this.message.last_name = null,
+              this.message.text= null,
+              this.message.email= null
+              this.flag = true
+              this.backendMessage = response.data.result
+          }
+          console.log('flag',this.flag)
         })
         .catch((error) => {
           // Gestisci gli errori
@@ -48,6 +59,7 @@ export default {
       .then((response) => {
         this.apartment = response.data.result;
         console.log("risposta api", response);
+      
       })
       .catch((error) => {
         console.error("Errore nella chiamata API:", error);
@@ -83,10 +95,12 @@ export default {
         </div>
       </div>
       <div class="col">
-        <form @submit.prevent method="post">
+        <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
+        <form class="p-3 " :class="flag ? 'green-form':''" @submit.prevent method="post">
           <div class="mb-3">
             <label for="text"> Scrivi un messaggio all'host </label>
             <input
+              class="form-control"
               type="text"
               v-model="message.text"
               name="text"
@@ -100,6 +114,7 @@ export default {
           <div class="mb-3">
             <label for="name"> Inserisci il tuo nome </label>
             <input
+             class="form-control"
               type="text"
               v-model="message.name"
               name="name"
@@ -113,6 +128,7 @@ export default {
           <div class="mb-3">
             <label for="last_name"> Inserisci il tuo cognome </label>
             <input
+             class="form-control"
               type="text"
               v-model="message.last_name"
               name="last_name"
@@ -125,6 +141,7 @@ export default {
           <div class="mb-3">
             <label for="email"> Inserisci la tua mail </label>
             <input
+             class="form-control"
               type="text"
               v-model="message.email"
               name="email"
@@ -132,6 +149,7 @@ export default {
               cols="30"
               rows="10"
               required
+              
             />
           </div>
           <button @click="sendMessage" class="btn btn-outline-dark">
@@ -146,8 +164,8 @@ export default {
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
 .card {
-  margin-top: 50px;
-  padding: 20px;
+ 
+  padding: 16px;
   border: none !important;
   .night {
     font-size: 0.9rem;
@@ -166,5 +184,9 @@ export default {
       list-style: none;
     }
   }
+}
+.green-form{
+  border: 3px solid green;
+  border-radius: 10px;
 }
 </style>
