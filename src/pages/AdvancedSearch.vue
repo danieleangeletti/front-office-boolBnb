@@ -49,7 +49,6 @@ export default {
                 this.store.apartmentName = []
                 console.log('risposta api tomtom',TomTomresponse)
                 let myData = TomTomresponse.data.results;
-                console.log('my data',myData)
                 for(let i = 0; i < myData.length ; i ++){
                 this.store.apartmentName.push(myData[i]['poi'].name) 
                 }
@@ -64,9 +63,8 @@ export default {
                     })
                     .then(response=>{
                         this.store.FilteredApartments = response.data.result;
-                        console.log(this.store.FilteredApartments)
+                        console.log( this.store.apartmentName)
                     })
-            console.log(this.services);
             });
         },
     },

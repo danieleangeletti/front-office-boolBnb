@@ -96,6 +96,7 @@ export default {
             )
             .then((responseThree) => {
               let myData = responseThree.data.results;
+              
               //  Dichiaro e uso una variabile dove pusho tutti i nomi presi dalla risposta alla precedente chiamata api di tomtom
               for (let i = 0; i < myData.length; i++) {
                 this.store.apartmentName.push(myData[i]["poi"].name);
@@ -117,7 +118,6 @@ export default {
     
     handleInputClick() {
       // Qui puoi inserire la logica da eseguire quando l'utente clicca sull'input
-      console.log('L\'utente ha cliccato sull\'input');
       let suggestionsContainer = document.getElementById("suggestions");
         let addressInput = this.store.userSearch;
           const input = addressInput.trim();
@@ -139,9 +139,9 @@ export default {
                         suggestion.classList.add('suggestion-list')
                         suggestion.textContent = result.address.freeformAddress;
                         suggestion.addEventListener("click", function() {
-                           store.userSearch = result.address.freeformAddress;
-                            suggestionsContainer.innerHTML = "";
-                            store.isChecked = true
+                          store.userSearch = result.address.freeformAddress;
+                          suggestionsContainer.innerHTML = "";
+                          store.isChecked = true
                         });
                         suggestionsContainer.appendChild(suggestion);
                     });
@@ -233,7 +233,7 @@ export default {
         
         
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @use "../assets/scss/main" as *;
 .user-search {
   width: 400px;
