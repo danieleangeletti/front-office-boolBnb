@@ -53,30 +53,6 @@ export default {
         });
     },
   },
-  created() {
-    axios
-      .get(`http://127.0.0.1:8000/api/apartments/${this.$route.params.slug}`)
-      .then((response) => {
-        this.apartment = response.data.result;
-        console.log("risposta api", response);
-      
-      })
-      .catch((error) => {
-        console.error("Errore nella chiamata API:", error);
-      });
-
-      axios.get('http://127.0.0.1:8000/api/user/email')
-    .then(response => {
-      // Estrai l'email dalla risposta
-      const userEmail = response.data.email;
-      
-      // Utilizza l'email come desideri
-      console.log('Email dell\'utente:', userEmail);
-    })
-    .catch(error => {
-      console.error('Errore nel recupero dell\'email dell\'utente:', error);
-    });
-  },
     created() {
         axios
             .get(`http://localhost:8000/api/apartments/${this.$route.params.slug}`)
