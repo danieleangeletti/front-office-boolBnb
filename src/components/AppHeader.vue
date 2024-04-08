@@ -46,7 +46,9 @@ export default {
           >Ricerca avanzata</router-link
         >
       </div>
-      <div class="col">login Placeholder</div>
+      <div class="col">
+        <a href="http://localhost:8000/">Vai all'area riservata</a>
+      </div>
     </div>
   </header>
 </template>

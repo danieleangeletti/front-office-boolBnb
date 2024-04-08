@@ -17,7 +17,7 @@ export default {
           params: {},
         })
         .then((response) => {
-
+          console.log(response)
           //Inserisco la risposta in una variabile nello store
             this.store.apartments = response.data.result;
           
@@ -81,6 +81,11 @@ export default {
                     data.results.forEach(result => {
                         const suggestion = document.createElement("li");
                         suggestion.classList.add('suggestion-list')
+                        //  suggestion.style.backgroundColor = "white"; // Applica lo stile inline
+                        //   suggestion.style.borderRadius = "10px";
+                        //   suggestion.style.padding = "4px";
+                        //   suggestion.style.listStyle = "none";
+                        //   suggestion.style.width = "200px";
                         suggestion.textContent = result.address.freeformAddress;
                         suggestion.addEventListener("click", function() {
                           store.userSearch = result.address.freeformAddress;
@@ -89,6 +94,10 @@ export default {
                         });
                         suggestionsContainer.appendChild(suggestion);
                     });
+                    document.addEventListener("click", function() {
+                        
+                        suggestionsContainer.innerHTML = "";
+                    })
                 })
                 .catch(error => console.error("Errore durante il recupero dei suggerimenti:", error));
         
@@ -109,45 +118,51 @@ export default {
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="d-flex justify-content-center position-relative ">
-          <input
-           @keyup="handleInputClick"
-            class="form-control my-2 user-search"
-            v-model="store.userSearch"
-            type="text"
-          />
-          <ul id="suggestions">
-
-          </ul>
-          <router-link
-            v-if="store.isChecked"
-            :to="{ name: 'advanced-search' }"
-            @click="searchApartment"
-            class="btn btn-outline-dark m-2"
-          >
-            SEARCH
-          </router-link>
-          <button v-else class="btn btn-outline-dark m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class=" d-flex flex-column align-items-center ">
+           
+          <div class="d-flex">
+              <input
+            @keyup="handleInputClick"
+              class="form-control my-2 user-search"
+              v-model="store.userSearch"
+              type="text"
+            />
+            <router-link
+              v-if="store.isChecked"
+              :to="{ name: 'advanced-search' }"
+              @click="searchApartment"
+              class="btn btn-outline-dark m-2"
+            >
               SEARCH
-          </button>
+            </router-link>
+            <button v-else class="btn btn-outline-dark m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                SEARCH
+            </button>
+          </div>
+          <div class="position-relative list-box">
+            <ul id="suggestions">
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                Devi scegliere un indirizzo dalla lista dei suggerimenti
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </ul>
+          </div>
+         
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Devi scegliere un indirizzo dalla lista dei suggerimenti
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <!-- v-if="store.FilteredApartments.length === 0" -->
@@ -177,31 +192,24 @@ export default {
         
         
 
-<style lang="scss" >
+<style lang="scss" scoped>
 @use "../assets/scss/main" as *;
 .user-search {
   width: 400px;
 }
 
-#suggestion {
+.list-box{
+  width: 400px;
+  #suggestions {
     background-color: white;
     border-radius: 10px;
     padding: 0;
     position: absolute;
-    bottom: 50;
-    left: 50;
-
-    li {
-        margin: 4px;
-        padding: 4px;
-        border-radius: 10px;
-        list-style: none;
-        width: 200px;
-
-        &:hover {
-            background-color: rgb(0, 0, 0, 0.2);
-        }
-    }
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }
 </style>
+    
 
