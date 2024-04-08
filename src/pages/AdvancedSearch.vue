@@ -48,6 +48,7 @@ export default {
           }
         ).then((response) => {
             this.store.FilteredApartments = response.data.result;
+            console.log(response);
         })
         }
     },
