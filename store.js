@@ -9,4 +9,7 @@ export const store = reactive({
   poilist: [],
   jsonPoilist: null,
   apartmentName: [],
+  isChecked: false,
+  sponsoredApartments: [],
+  notSponsoredApartments:[]
 });
