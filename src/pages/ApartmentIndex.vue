@@ -33,36 +33,9 @@ export default {
               this.store.notSponsoredApartments.push(response.data.result[i]) 
             }
           }
-
-          //Preparo una lista di appartamenti (in questo caso 25 perchè tomtom non vuole strighe troppo lunghe)
-          //nel formato specificato nella documentazione di tomtom
-          
-          for (let i = 0; i < 20; i++) {
-            if (
-              this.store.apartments[i].latitude &&
-              this.store.apartments[i].longitude != null
-            ) {
-              this.store.poilist.push({
-                poi: {
-                  name: this.store.apartments[i].name,
-                },
-                address: {
-                  " freeformAddress": this.store.apartments[i].address,
-                },
-                position: {
-                  lat: parseFloat(this.store.apartments[i].latitude),
-                  lon: parseFloat(this.store.apartments[i].longitude),
-                },
-              });
-            }
-          }
-          //trasformo la lista di POI creata in precedenza in una stringa JSON
-          this.store.jsonPoilist = JSON.stringify(this.store.poilist);
         });
     },
     searchApartment() {
-
-          
       axios
         // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
         .get(
@@ -75,49 +48,20 @@ export default {
         )
         .then((responseOne) => {
           this.store.firstApi = responseOne.data.results[0].position;
-
-          //Faccio la seconda chiamata a tomtom dove specifico: 1-tipo di figura geometrica da usare come forma per il filtraggio
-          //                                            2-chiave API personale presa dal sito di tomtom
-          //                                            3-La lista di Appartamenti da filtrare in formato JSON
-          axios
-            .get(
-              'https://api.tomtom.com/search/2/geometryFilter.json?geometryList=[{"type":"CIRCLE", "position":"' +
-                this.store.firstApi.lat +
-                ", " +
-                this.store.firstApi.lon +
-                '", "radius":20000}]',
-              {
-                params: {
-                  key: "uQKNMTMSFoV1bSWi015M9fIPIvXFMwfK",
-
-                  poiList: this.store.jsonPoilist,
-                },
-              }
-            )
-            .then((responseThree) => {
-              let myData = responseThree.data.results;
-              //  Dichiaro e uso una variabile dove pusho tutti i nomi presi dalla risposta alla precedente chiamata api di tomtom
-              for (let i = 0; i < myData.length; i++) {
-                this.store.apartmentName.push(myData[i]["poi"].name);
-              }
-              axios
-                // Faccio una terza chiamata, questa volta al mio backend, che mi cerchera nel database gli appartamenti che corrispondono a quei nomi
-                .get("http://localhost:8000/api/getApartments", {
-                  params: {
-                    allName: this.store.apartmentName,
-                  },
-                })
-                .then((response) => {
-                  // Inserisco
-                  this.store.FilteredApartments = response.data.result;
-                });
-            });
+          axios.get("http://localhost:8000/api/getApartments", {
+            params: {
+              lat: this.store.firstApi.lat,
+              lon: this.store.firstApi.lon
+            }
+          })
+          .then((response) => {
+            this.store.FilteredApartments = response.data.result;
+          })
         });
     },
     
     handleInputClick() {
       // Qui puoi inserire la logica da eseguire quando l'utente clicca sull'input
-      console.log('L\'utente ha cliccato sull\'input');
       let suggestionsContainer = document.getElementById("suggestions");
         let addressInput = this.store.userSearch;
           const input = addressInput.trim();
