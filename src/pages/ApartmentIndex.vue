@@ -20,7 +20,8 @@ export default {
           console.log(response)
           //Inserisco la risposta in una variabile nello store
             this.store.apartments = response.data.result;
-          
+            this.store.notSponsoredApartments = []
+            this.store.sponsoredApartments =  []
           for(let i = 0; i < this.store.apartments.length; i ++){
             if(response.data.result[i].sponsorships.length > 0){
 
@@ -179,9 +180,9 @@ export default {
         <h1>Appartamenti poveri</h1>
         <div class=" d-flex flex-wrap">
           <ApartmentComponent
-            v-for="(elem, i) in store.notSponsoredApartments"
-            :apartment="elem"
-            :key="i"
+            v-for="(x, j) in store.notSponsoredApartments"
+            :apartment="x"
+            :key="j"
           />
         </div>
       </div>
