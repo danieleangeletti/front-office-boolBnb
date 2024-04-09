@@ -43,7 +43,8 @@ export default {
               lon: this.store.firstApi.lon,
               nRooms: this.nRooms,
               nBeds: this.nBeds,
-              distance: this.radius
+              distance: this.radius,
+              services:this.services
             }
           }
         ).then((response) => {
