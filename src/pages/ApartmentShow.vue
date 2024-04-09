@@ -116,7 +116,8 @@ export default {
                                         id="name"
                                         cols="30"
                                         rows="10"
-                                        required
+                                       
+                                        maxlength="100"
                                     />
                                 </div>
 
@@ -130,13 +131,14 @@ export default {
                                         id="last_name"
                                         cols="30"
                                         rows="10"
-                                        required
+                                       
+                                        maxlength="100"
                                     />
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                            <label for="email"> Inserisci la tua mail </label>
+                            <label for="email"> Inserisci la tua mail <span class="text-danger">*</span></label>
                             <input
                                 class="form-control"
                                 type="text"
@@ -146,27 +148,19 @@ export default {
                                 cols="30"
                                 rows="10"
                                 required
-                                
+                                maxlength="100"
                             />
                             </div>
 
                             <div class="mb-3">
-                            <label for="text"> Scrivi un messaggio all'host </label>
-                            <input
-                                class="form-control text"
-                                type="text"
-                                v-model="message.text"
-                                name="text"
-                                id="message"
-                                cols="30"
-                                rows="10"
-                                required
-                            />
-                            </div>
+                            <label for="text"> Scrivi un messaggio all'host <span class="text-danger">*</span></label>
+                            <textarea  required id="message" v-model="message.text" class="form-control" placeholder="Leave a comment here" ></textarea>
+                        </div>
 
-                            <button @click="sendMessage" class="btn btn-outline-dark">
-                            Invia il messaggio
-                            </button>
+                        <button @click="sendMessage" class="btn btn-outline-dark">
+                        Invia il messaggio
+                        </button>
+                        
                 </form>
             </div>
         </div>
