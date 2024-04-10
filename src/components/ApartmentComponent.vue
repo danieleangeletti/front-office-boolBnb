@@ -27,7 +27,10 @@ export default {
                     {{ apartment.name }}
                 </li>
                 <li>
-                    <span>€{{ Math.floor(apartment.price) }} </span><span >notte. </span><span class="night ms-1">€{{ Math.floor(apartment.price * apartment.n_guests) }} in totale</span>
+                    {{apartment.price }}€ per notte.
+                </li>
+                <li>
+                    <!-- BADGE PER SPONSORSHIP -->
                 </li>
             </ul>
         </router-link>
