@@ -11,7 +11,7 @@ export default {
         last_name: null,
         text: null,
         email: null,
-        
+        term: null
       },
   };
 },
@@ -77,6 +77,17 @@ export default {
         map.on('load',() => {
             new tt.Marker().setLngLat(center).addTo(map)
         })
+           fetch('https://api.ipify.org?format=json')
+        .then(x => x.json())
+        .then(({ ip }) => {
+            this.term = ip;
+          axios.post(`http://localhost:8000/api/apartments${this.$route.params.slug}`,
+          {
+            idAddress: this.term
+          }
+        )
+        });
+      
     }
 };
 </script>
