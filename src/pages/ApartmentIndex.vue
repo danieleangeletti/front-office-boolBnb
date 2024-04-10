@@ -7,6 +7,7 @@ export default {
   data() {
     return {
       store,
+      
     };
   },
   methods: {
@@ -111,6 +112,7 @@ export default {
   },
   mounted() {
     this.callTheApartmentsNormal();
+   
   },
 };
 </script>

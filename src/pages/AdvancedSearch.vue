@@ -13,7 +13,8 @@ export default {
             nBeds: '',
             radius: 20,
             services: [],
-            center:null
+            center:null,
+            myMap:null
             
         };
     },
@@ -32,21 +33,41 @@ export default {
             })
             .then(response=>{
                 this.store.services = response.data.result;
-                this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
-                 let map = tt.map({
+                
+               let map = this.myMap
+                let markerElement = null
+                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+                      var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
+                       
+                    markerElement = marker.getPopup();
+                    markerElement.className = 'apartment-marker';
+                    markerElement.innerHTML = `
+                    <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+                    <div class="marker-content">
+                        <h3>${this.store.FilteredApartments[i].name}</h3>
+                        <p>${this.store.FilteredApartments[i].free_form_address}</p>
+                    </div>
+                    `;
+                    this.map.on('load',() => {
+                        marker
+                        })
+                }
+            });
+        },
+        initializeMap(){
+             this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
+                this.myMap = tt.map({
                     key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
                     container:"ma",
                     center:this.center,
                     zoom:10
                 })
-                 map.on('load',() => {
-                   for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-                       new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
-                       
-                   }
-                })
-            });
         },
+                      
+                            
+                    
+                    
+                     
                      
                     
         advancedResearch(){
@@ -66,30 +87,36 @@ export default {
           }
         ).then((response) => {
             this.store.FilteredApartments = response.data.result;
-              let map = tt.map({
-                    key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
-                    container:"ma",
-                    center:this.center,
-                    zoom:10
-                })
-                 map.on('load',() => {
-                   for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-                       new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
+                let map = this.myMap
+                let markerElement = null
+                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+                      var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
                        
-                   }
-                })
+                    markerElement = marker.getElement();
+                    markerElement.className = 'apartment-marker';
+                    markerElement.innerHTML = `
+                    <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+                    <div class="marker-content">
+                        <h3>${this.store.FilteredApartments[i].name}</h3>
+                        <p>${this.store.FilteredApartments[i].free_form_address}</p>
+                    </div>
+                    `;
+                    this.map.on('load',() => {
+                        marker
+                        })
+                }
             console.log(response);
         })
         },
         
     },
-    created(){
-        
+    updated(){
+        this.initializeMap();
     },
     mounted(){
             this.callTheServices();
-            
-              
+           
+           
         },
       
     
@@ -148,5 +175,13 @@ export default {
    margin-top: 70px;
     height: 800px;
     border-radius: 20px;
+    .marker-content{
+        width: 50px;
+        border-radius: 10px;
+        background-color: white!important;
+        img{
+            width: 100%;
+        }
+    }
 }
 </style>
