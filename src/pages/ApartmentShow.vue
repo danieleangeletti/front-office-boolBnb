@@ -81,7 +81,7 @@ export default {
         .then(x => x.json())
         .then(({ ip }) => {
             this.term = ip;
-          axios.post(`http://localhost:8000/api/apartments${this.$route.params.slug}`,
+          axios.post(`http://localhost:8000/api/view${this.$route.params.slug}`,
           {
             idAddress: this.term
           }
