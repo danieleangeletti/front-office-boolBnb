@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header class="container-fluid text-center shadow-sm">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top sticky-top vh-10 z-2 position-absolute">
         <div class="container-fluid">
@@ -63,12 +63,12 @@ export default {
                 <!-- Sidebar Body -->
                 <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
                     <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
-                        <li class="nav-item mx-2">
-                            <router-link class="nav-link active router-link" :to="{ name: 'Home-page' }" @click="callTheApartments()">
+                        <li class="hov-underline nav-item mx-4">
+                            <router-link class="nav-link active router-link p-0" :to="{ name: 'Home-page' }" @click="callTheApartments()">
                                 Home
                             </router-link>
                         </li>
-                        <li class="nav-item mx-2">
+                        <li class="hov-underline nav-item mx-4">
                             <a href="http://localhost:8000/" class="text-black text-decoration-none">
                                 Area Personale
                             </a>                            
@@ -77,7 +77,7 @@ export default {
 
                     <!-- Login / Sign up -->
                     <div class="login-box d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3">
-                        <a href="http://localhost:8000/login" class="login"> Login </a>
+                        <a href="http://localhost:8000/login" class="login hov-underline"> Login </a>
                         <a href="http://localhost:8000/register" class="register text-white text-decoration-none px-3 py-1 rounded-4" style="background-color: #EB5A63;"> Registrati </a>
                     </div>
                 </div>
@@ -90,40 +90,64 @@ export default {
 
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
+header{
+    height: 80px;
+    background-color: white;
+    position: fixed;
+    z-index: 2;
 
     .navbar-brand, .register{
         margin: 0 20px;
         border-radius: 20px;
     }
-    li{
+
+    .hov-underline {
+        position: relative;
+        display: inline-block;
+        //padding-bottom: 3px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease; /* Aggiungi una transizione fluida per l'effetto hover */
         &:hover{
-            color: #EB5A63;
-            text-decoration: #EB5A63 underline;
+            transform: scale(1.1);
         }
     }
-
+    /* Animazione per la sottolineatura */
+    .hov-underline::after {
+    content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0; /* Inizia senza larghezza */
+        height: 2px; /* Altezza della sottolineatura */
+        background-color: #EB5A63; 
+        transition: width 0.3s ease; /* Aggiungi una transizione fluida per l'animazione */
+        transform: scale(1.1);
+    }
+    .hov-underline:hover::after {
+        width: 100%; /* Espandi la larghezza al 100% durante l'hover */
+        
+    }
+    
     .login{
         color: #EB5A63;
         text-decoration: none;
-
-        &:hover{
-            text-decoration: underline;
-        }
-    }
-    .register{
-        &:hover{
-            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
-        }
     }
 
+    .register {
+        transition: transform 0.3s ease; /* Aggiungi transizione fluida per l'ingrandimento */
+
+        &:hover {
+            transform: scale(1.1); /* Inganna l'elemento del 10% durante l'hover */
+            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); /* Aggiungi ombra */
+        }
+    }
+    
+}
 @media (max-width:768px) {
     
     .sidebar{
         backdrop-filter: blur(10px);
-    }
-    .logo {
-        content: url(../../public/img/logos/boolairbnb-favicon.PNG);
-        height: 8vh;
     }
   
 }
