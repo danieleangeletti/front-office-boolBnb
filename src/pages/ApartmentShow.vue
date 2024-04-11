@@ -18,13 +18,6 @@ export default {
 },
 
 methods: {
-    sendMessageAndOpenModal() {
-        this.sendMessage();
-        this.openModal();
-    },
-    openModal() {
-        
-    },
     sendMessage() {
       // Esegui la chiamata API POST
       axios
@@ -51,6 +44,7 @@ methods: {
               this.message.text= null,
               this.message.email= null
               this.flag = true
+              /* this.showModal = true */
               this.backendMessage = response.data.result
           }
           
@@ -59,6 +53,9 @@ methods: {
           // Gestisci gli errori
           console.error("Errore nella chiamata API:", error);
         });
+    },
+    closeModal() {
+        this.showModal = false;
     },
 },
     created() {
@@ -109,12 +106,12 @@ methods: {
                             {{ apartment.name }}
                         </h1>
                     </div>
-                <div class="col-12 col-sm-6 px-5"> <!-- Modifica qui -->
+                <div class="col-12 col-sm-6 px-5"> 
                     <div class="img-box">
                         <img :src="'http://127.0.0.1:8000/storage/' + apartment.img_cover_path" alt="Cover Image"/>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 px-5"> <!-- Modifica qui -->
+                <div class="col-12 col-sm-6 px-5"> 
                     
                     <ul class="p-0">
                         <li>
@@ -126,7 +123,7 @@ methods: {
                         <li>
                             Il costo é di <span>{{ apartment.price }} € per notte. </span>
                         </li>
-                        <li class="mt-4"> <!-- Rimuovi la classe d-flex -->
+                        <li class="mt-4">
                             <div>
                                 Caratteristiche dell'alloggio:
                                 <ul class="p-0">
@@ -165,13 +162,7 @@ methods: {
                 </div>
             </div>
         </div>
-    </div>
-        
-    <div id="ma">
-        <!-- MAPPA TOM TOM PER LOCATION APPARTAMENTO -->
-    </div>
-
-    <!-- INIZIO FORM -->
+        <!-- INIZIO FORM -->
 <div class="container-fluid my-5">
     <div class="my-container">
         <div class="col-12">
@@ -202,15 +193,39 @@ methods: {
                     <textarea  required id="message" v-model="message.text" class="form-control" rows="10" placeholder="Scrivi qui il tuo messaggio" ></textarea>
                 </div>    
 
-                <button @click="sendMessageAndOpenModal" class="btn btn-outline-dark centered">
+                <button @click="sendMessage" class="btn btn-outline-dark centered">
                     Invia il messaggio
                 </button>
             </form>
         </div>
     </div>
 </div>
+<!-- FINE FORM -->
+    </div>
+        
+    <div id="ma">
+        <!-- MAPPA TOM TOM PER LOCATION APPARTAMENTO -->
+    </div>
+
     
-    <!-- FINE FORM -->
+
+<!-- INIZIO MODAL -->
+    <section id="contact-form-modal">
+        <div v-if="showModal" class="my-modal">
+            <div class="my-modal-content">
+                
+                <!-- Icona che ci permette di chiudere il modale attraverso la funzione closeModal -->
+                <span class="close" @click="closeModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+                <h3>
+                    Il tuo messaggio é stato inviato correttamente!
+                </h3>
+
+            </div>
+        </div>
+    </section>
+<!-- FINE MODAL -->
 </template>
 
 
@@ -242,6 +257,12 @@ methods: {
     display: block;
     margin: auto;
 }
+
+.close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
 
 ul {
     li {
