@@ -7,6 +7,7 @@ export default {
   data() {
     return {
       store,
+      
     };
   },
   methods: {
@@ -111,6 +112,7 @@ export default {
   },
   mounted() {
     this.callTheApartmentsNormal();
+   
   },
 };
 </script>
@@ -176,8 +178,6 @@ export default {
               :key="i"
             />
         </div>
-
-        <h1>Appartamenti poveri</h1>
         <div class=" d-flex flex-wrap">
           <ApartmentComponent
             v-for="(x, j) in store.notSponsoredApartments"

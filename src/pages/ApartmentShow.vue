@@ -11,7 +11,7 @@ export default {
         last_name: null,
         text: null,
         email: null,
-        
+        term: null
       },
   };
 },
@@ -45,7 +45,7 @@ export default {
               this.flag = true
               this.backendMessage = response.data.result
           }
-          console.log('flag',this.flag)
+          
         })
         .catch((error) => {
           // Gestisci gli errori
@@ -65,6 +65,30 @@ export default {
             console.error("Errore nella chiamata API:", error);
         });
     },
+    mounted(){
+        
+        let center = [this.apartment.longitude,this.apartment.latitude]
+        const map = tt.map({
+            key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+            container:"ma",
+            center:center,
+            zoom:13
+        })
+        map.on('load',() => {
+            new tt.Marker().setLngLat(center).addTo(map)
+        })
+           fetch('https://api.ipify.org?format=json')
+        .then(x => x.json())
+        .then(({ ip }) => {
+            this.term = ip;
+          axios.post(`http://localhost:8000/api/view/${this.$route.params.slug}`,
+          {
+            idAddress: this.term
+          }
+        )
+        });
+      
+    }
 };
 </script>
 
@@ -103,6 +127,9 @@ export default {
                 </div>
             </div>
             <div class="col-12 col-sm-6">
+                <div id="ma">
+
+                </div>
                 <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
                 <form class="p-3 " :class="flag ? 'green-form':''" @submit.prevent method="post">
                     <div class="row">
@@ -200,5 +227,9 @@ export default {
     .my-card {
         width: calc(100% / 1);
     }
+}
+#ma{
+    width: 100%;
+    height: 400px;
 }
 </style>
