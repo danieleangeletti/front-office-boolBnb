@@ -100,18 +100,18 @@ export default {
 }
 @media (min-width: 992px) {
     .my-card {
-        width: calc(100% / 4);
+        width: calc(100% / 3);
     }
 }
 
 @media (min-width: 1200px) {
     .my-card {
-        width: calc(100% / 5);
+        width: calc(100% / 4);
     }
 }
 @media (min-width: 1400px) {
     .my-card {
-        width: calc(100% / 6);
+        width: calc(100% / 5);
     }
 }
 </style>
