@@ -18,7 +18,6 @@ export default {
           params: {},
         })
         .then((response) => {
-          console.log(response)
           //Inserisco la risposta in una variabile nello store
             this.store.apartments = response.data.result;
             this.store.notSponsoredApartments = []
