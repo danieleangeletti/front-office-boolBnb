@@ -77,20 +77,26 @@ export default {
         map.on('load',() => {
             new tt.Marker().setLngLat(center).addTo(map)
         })
+        
            fetch('https://api.ipify.org?format=json')
         .then(x => x.json())
         .then(({ ip }) => {
             this.term = ip;
-          axios.post(`http://localhost:8000/api/view/${this.$route.params.slug}`,
-          {
-            idAddress: this.term
-          }
-        )
-        });
-      
-    }
+           
+            axios.post(`http://localhost:8000/api/view/${this.$route.params.slug}`,
+            {
+                ipAddress: this.term
+            }
+            ).then((response)=>{
+                console.log('risposta view',response)
+                
+            })
+            });
+  }
+            
 };
 </script>
+    
 
 <template>
     <div class="container">

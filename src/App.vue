@@ -13,12 +13,21 @@ export default {
         AppHeader,
         AppFooter,
         AppMain
+    },
+   mounted(){
+    
+
     }
 }
 </script>
         
 
 <template>
+<div class="container-fluid position-relative p-0">
+    <div class="my-welcome">
+        <img class="gsap-logo position-absolute " src="../../public/img/logos/boolairbnb-favicon.PNG" alt="">
+        <img class="gsap-logo-2 position-absolute " src="../../public/img/logos/boolairbnb-bianco-trasparente600px.PNG" alt="">
+    </div>
 
     <AppHeader />
 
@@ -26,12 +35,35 @@ export default {
 
     <AppFooter />
 
+</div>
 </template>
         
 
 <style lang="scss">
     @use "assets/scss/main" as *;
     @import "assets/scss/partials/reset";
+   .my-welcome{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 3;
+  background-color: #13192F;
+  .gsap-logo{
    
+    width: 300px;
+    object-fit: contain;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+   .gsap-logo-2{
+   
+    width: 300px;
+    object-fit: contain;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+}
 </style>
 
