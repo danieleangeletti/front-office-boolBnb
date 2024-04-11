@@ -215,6 +215,7 @@ export default {
   border-radius: 30px;
   padding-left: 20px;
   padding-right: 20px;
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 .my-primary-button:hover {
@@ -222,9 +223,10 @@ export default {
   font-weight: 600;
   color: #ec5a64;
   border: 2px solid #ec5a64;
-  border-radius: 30px;
+  border-radius: 40px;
   padding-left: 20px;
   padding-right: 20px;
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 .list-box{
