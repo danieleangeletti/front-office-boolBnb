@@ -144,7 +144,7 @@ export default {
             >
               SEARCH
             </router-link>
-            <button v-else class="btn btn-outline-dark m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 SEARCH
             </button>
           </div>
@@ -176,7 +176,7 @@ export default {
       </div>
       <!-- v-if="store.FilteredApartments.length === 0" -->
       <div class="col-12">
-        <h1 class="sponsorized">Appartamenti in evidenza</h1>
+        <h1 class="sponsorized"></h1>
           <div class="d-flex flex-wrap border-bottom ">
             <ApartmentComponent
               v-for="(elem, i) in store.sponsoredApartments"
@@ -204,6 +204,27 @@ export default {
 @use "../assets/scss/main" as *;
 .user-search {
   width: 400px;
+  border-radius: 50px;
+}
+
+.my-primary-button {
+  background-color: #ec5a64;
+  color: white;
+  font-weight: 600;
+  border: 1px solid #ec5a64;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.my-primary-button:hover {
+  background-color: white;
+  font-weight: 600;
+  color: #ec5a64;
+  border: 2px solid #ec5a64;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .list-box{
