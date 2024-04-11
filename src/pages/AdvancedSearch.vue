@@ -139,7 +139,7 @@ export default {
                 <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="1" max="50" step="1" >
                 <div>{{ radius }} km</div>
             </div>
-            <div class="mb-3 d-flex justify-content-center">
+            <div class="mb-3 d-flex flex-wrap justify-content-center">
                 <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
                     <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
                     <label class="form-check-label" :for="elem.id">
@@ -153,7 +153,7 @@ export default {
                 </button>
             </div>
         </div>
-        <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-6 d-flex flex-wrap">
+        <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap my-card">
            
                 <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
             
@@ -180,6 +180,97 @@ export default {
         img{
             width: 100%;
         }
+    }
+}
+
+.my-card {
+    //width: calc(100% / 4);
+    margin-top: 50px;
+    padding: 20px;
+    border: none!important;
+    position: relative;
+    .badge{
+        position: absolute;
+        z-index: 1;
+        top: 7%;
+        left: 10%;
+        display: inline-block;
+        height: 30px;
+        line-height: 18px;
+        vertical-align: middle;
+        width: 100px;
+        font-size: 0.8rem;
+        font-weight:500;
+        border: 1px solid lightgray;
+
+    }
+    .title{
+        font-weight: 600;
+    }
+    .link {
+        color: black;
+        text-decoration: none;
+    }
+
+    .night {
+        font-size: 0.9rem;
+        color: gray;
+        text-decoration: underline;
+    }
+
+    .img-box {
+        position: relative;
+        width: 100%;
+        padding-top: 100%; 
+        overflow: hidden;
+        border-radius: 20px;
+
+        .img-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    ul {
+        li {
+            list-style: none;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .my-card {
+        width: calc(100% / 1);
+    }
+}
+@media (min-width: 576px) {
+    .my-card {
+        width: calc(100% / 2);
+    }
+}
+@media (min-width: 992px) {
+    .my-card {
+        width: calc(100% / 3);
+    }
+}
+
+@media (min-width: 1200px) {
+    .my-card {
+        width: calc(100% / 4);
+    }
+}
+@media (min-width: 1400px) {
+    .my-card {
+    width: calc(100% / 5);
     }
 }
 </style>

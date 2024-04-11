@@ -5,13 +5,13 @@ import axios from "axios";
 import { store } from "../../store.js";
 import { gsap } from "gsap";
 export default {
-  data() {
-    return {
-      store,
-     
-      
-    };
-  },
+    data() {
+        return {
+            store,
+            
+            
+        };
+    },
   methods: {
     callTheApartmentsNormal() {
       axios
@@ -114,11 +114,25 @@ export default {
     FilteredApartmentComponent,
   },
  mounted() {
-  setTimeout(() => {
-    this.callTheApartmentsNormal();
-  }, 2200);
-  gsap.from(".sponsorized", { x: -500, duration: 1, delay:3 ,ease:'power4'});
+    setTimeout(() => {
+        this.callTheApartmentsNormal();
+    }, 2200);
+    gsap.from(".sponsorized", { x: -500, duration: 1, delay:3 ,ease:'power4'});
 
+    window.addEventListener('scroll', function() {
+        var scrollButton = document.querySelector('.scroll-to-top');
+        if (window.scrollY > 100) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
+    });
+    document.querySelector('.scroll-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
 }
 
 };
@@ -149,11 +163,14 @@ export default {
                 SEARCH
             </button>
           </div>
-          <div class="position-relative list-box">
-            <ul id="suggestions">
+            <div class="position-relative list-box">
+                <ul id="suggestions">
 
-            </ul>
-          </div>
+                </ul>
+            </div>
+            <div class="scroll-to-top" @click="scrollToTop">
+                <i class="fas fa-arrow-up"></i>
+            </div>
          
 
           <!-- Modal -->
@@ -237,6 +254,32 @@ export default {
     width: 100%;
     z-index: 2;
   }
+}
+
+.scroll-to-top {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: rgba(235, 90, 99, 1);
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 45px;
+    cursor: pointer;
+    z-index: 999;
+    transition: transform 0.3s ease; /* Aggiungi transizione fluida per l'ingrandimento */
+
+        &:hover {
+            transform: scale(1.1); /* Inganna l'elemento del 10% durante l'hover */
+            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); /* Aggiungi ombra */
+        }
+}
+
+.scroll-to-top i {
+    font-size: 20px;
 }
 </style>
     
