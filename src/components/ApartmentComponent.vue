@@ -10,13 +10,15 @@ export default {
     },
     props:{
         apartment:Object
-    } 
+    }
+     
 }
 </script>
 
 <template>
     <div class="my-card">
         <router-link class="link" :to="{name:'apartment-show', params: { slug: apartment.slug }}">
+            <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span>
             <div class="img-box">
                 <div class="img-wrapper">
                     <img :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
@@ -44,7 +46,22 @@ export default {
     margin-top: 50px;
     padding: 20px;
     border: none!important;
+    position: relative;
+    .badge{
+        position: absolute;
+        z-index: 1;
+        top: 7%;
+        left: 10%;
+        display: inline-block;
+        height: 30px;
+        line-height: 18px;
+        vertical-align: middle;
+        width: 100px;
+        font-size: 0.8rem;
+        font-weight:500;
+        border: 1px solid lightgray;
 
+    }
     .title{
         font-weight: 600;
     }
@@ -100,18 +117,18 @@ export default {
 }
 @media (min-width: 992px) {
     .my-card {
-        width: calc(100% / 4);
+        width: calc(100% / 3);
     }
 }
 
 @media (min-width: 1200px) {
     .my-card {
-        width: calc(100% / 5);
+        width: calc(100% / 4);
     }
 }
 @media (min-width: 1400px) {
     .my-card {
-        width: calc(100% / 6);
+        width: calc(100% / 5);
     }
 }
 </style>
