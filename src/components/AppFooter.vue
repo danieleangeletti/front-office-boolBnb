@@ -1,7 +1,10 @@
 <script>
+import axios from "axios";
+import { store } from "../../store.js";
 export default {
   data() {
     return {
+      store,
       visibleDestinations: [],
       destinationsObjs: [
       [
@@ -241,6 +244,30 @@ export default {
       this.activeIndex = i;
       this.visibleDestinations = [];
       this.visibleDestinations.push(this.destinationsObjs[this.activeIndex]);
+    },
+    footerAdvancedSearch(obj){
+        axios
+        // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
+        .get(
+          "https://api.tomtom.com/search/2/geocode/.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+          {
+            params: {
+              query: obj.destination,
+            },
+          }
+        )
+        .then((responseOne) => {
+          this.store.firstApi = responseOne.data.results[0].position;
+          axios.get("http://localhost:8000/api/getApartments", {
+            params: {
+              lat: this.store.firstApi.lat,
+              lon: this.store.firstApi.lon
+            }
+          })
+          .then((response) => {
+            this.store.FilteredApartments = response.data.result;
+          })
+        });
     }
   },
   mounted(){
@@ -267,12 +294,18 @@ export default {
         </ul>
         <div class="row">
           <div v-for="(elem, i) in visibleDestinations[0]" class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3 pointer">
-            <div>
-              <strong>{{ elem.destination }}</strong>
-            </div>
-            <div class="text-secondary">
-              {{ elem.typeOfStay }}
-            </div>
+            <router-link
+              :to="{ name: 'advanced-search' }"
+              @click="footerAdvancedSearch(elem)"
+              class="text-decoration-none"
+            >
+              <div class="text-dark">
+                <strong>{{ elem.destination }}</strong>
+              </div>
+              <div class="text-secondary">
+                {{ elem.typeOfStay }}
+              </div>
+            </router-link>
           </div>
         </div>
       </div>

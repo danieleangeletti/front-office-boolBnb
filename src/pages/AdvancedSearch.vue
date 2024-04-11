@@ -13,8 +13,8 @@ export default {
             nBeds: '',
             radius: 20,
             services: [],
-            center:null,
-            myMap:null
+            // center:null,
+            // myMap:null
             
         };
     },
@@ -34,35 +34,35 @@ export default {
             .then(response=>{
                 this.store.services = response.data.result;
                 
-               let map = this.myMap
-                let markerElement = null
-                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-                      var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
+            //    let map = this.myMap
+            //     let markerElement = null
+            //     for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+            //           var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
                        
-                    markerElement = marker.getPopup();
-                    markerElement.className = 'apartment-marker';
-                    markerElement.innerHTML = `
-                    <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
-                    <div class="marker-content">
-                        <h3>${this.store.FilteredApartments[i].name}</h3>
-                        <p>${this.store.FilteredApartments[i].free_form_address}</p>
-                    </div>
-                    `;
-                    this.map.on('load',() => {
-                        marker
-                        })
-                }
+            //         markerElement = marker.getPopup();
+            //         markerElement.className = 'apartment-marker';
+            //         markerElement.innerHTML = `
+            //         <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+            //         <div class="marker-content">
+            //             <h3>${this.store.FilteredApartments[i].name}</h3>
+            //             <p>${this.store.FilteredApartments[i].free_form_address}</p>
+            //         </div>
+            //         `;
+            //         this.map.on('load',() => {
+            //             marker
+            //             })
+            //     }
             });
         },
-        initializeMap(){
-             this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
-                this.myMap = tt.map({
-                    key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
-                    container:"ma",
-                    center:this.center,
-                    zoom:10
-                })
-        },
+        // initializeMap(){
+        //      this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
+        //         this.myMap = tt.map({
+        //             key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+        //             container:"ma",
+        //             center:this.center,
+        //             zoom:10
+        //         })
+        // },
                       
                             
                     
@@ -71,7 +71,7 @@ export default {
                      
                     
         advancedResearch(){
-            axios
+        axios
         // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
         .get(
           "http://localhost:8000/api/advancedResearch",
@@ -87,36 +87,34 @@ export default {
           }
         ).then((response) => {
             this.store.FilteredApartments = response.data.result;
-                let map = this.myMap
-                let markerElement = null
-                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-                      var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
+                // let map = this.myMap
+                // let markerElement = null
+                // for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+                //       var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
                        
-                    markerElement = marker.getElement();
-                    markerElement.className = 'apartment-marker';
-                    markerElement.innerHTML = `
-                    <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
-                    <div class="marker-content">
-                        <h3>${this.store.FilteredApartments[i].name}</h3>
-                        <p>${this.store.FilteredApartments[i].free_form_address}</p>
-                    </div>
-                    `;
-                    this.map.on('load',() => {
-                        marker
-                        })
-                }
+                //     markerElement = marker.getElement();
+                //     markerElement.className = 'apartment-marker';
+                //     markerElement.innerHTML = `
+                //     <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+                //     <div class="marker-content">
+                //         <h3>${this.store.FilteredApartments[i].name}</h3>
+                //         <p>${this.store.FilteredApartments[i].free_form_address}</p>
+                //     </div>
+                //     `;
+                //     this.map.on('load',() => {
+                //         marker
+                //         })
+                // }
             console.log(response);
         })
         },
         
     },
-    updated(){
-        this.initializeMap();
-    },
+    // updated(){
+    //     this.initializeMap();
+    // },
     mounted(){
             this.callTheServices();
-           
-           
         },
       
     
@@ -163,9 +161,9 @@ export default {
             <div v-else>
                 non ci sono appartamenti in questa posizione
             </div>
-            <div id="ma" class="col-6">
+            <!-- <div id="ma" class="col-6">
       
-            </div>
+            </div> -->
       </div>
     </div>
 </template>
