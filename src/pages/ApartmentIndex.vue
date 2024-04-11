@@ -141,7 +141,7 @@ export default {
               v-if="store.isChecked"
               :to="{ name: 'advanced-search' }"
               @click="searchApartment"
-              class="btn btn-outline-dark m-2"
+              class="my-primary-button m-2" id="search-button-after-check"
             >
               SEARCH
             </router-link>
@@ -217,6 +217,11 @@ export default {
 
 .btn-close {
   color: #ec5a64;
+}
+
+#search-button-after-check {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .list-box{
