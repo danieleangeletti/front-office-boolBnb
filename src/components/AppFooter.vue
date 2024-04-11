@@ -280,7 +280,7 @@ export default {
     <hr class="m-0">
     <div class="container">
       <div class="row pt-5 pb-5">
-        <div v-for="(elem, i) in footerList" class="col-12 col-sm-6 col-md-4 pointer">
+        <div v-for="(elem, i) in footerList" class="col-12 col-md-4 pointer">
           <div class="mb-3">
             <strong>{{ elem.title }}</strong>
           </div>
@@ -292,38 +292,53 @@ export default {
       <hr class="m-0">
     </div>
     <div class="container pt-4 pb-4">
-      <div class="d-flex justify-content-between">
-        <div>
-          <span class="pe-1">
-            © 2024 Airbnb, Inc.
-          </span>
-          <span class="ps-1 pe-1">
-            ·
-          </span>
-          <span class="pointer ps-1 pe-1">
-            Privacy
-          </span>
-          <span class="ps-1 pe-1">
-            ·
-          </span>
-          <span class="pointer ps-1 pe-1">
-            Termini
-          </span>
-          <span class="ps-1 pe-1">
-            ·
-          </span>
-          <span class="pointer ps-1 pe-1">
-            Mappa del sito
-          </span>
-          <span class="ps-1 pe-1">
-            ·
-          </span>
-          <span class="pointer ps-1">
-            Dettagli dell'azienda
-          </span>
+      <div class="row">
+        <div class="col-12 col-md-auto">
+          <div class="d-md-flex justify-content-md-end">
+            <span class="pe-1">
+              © 2024 Airbnb, Inc.
+            </span>
+            <span class="ps-1 pe-1">
+              ·
+            </span>
+            <span class="pointer ps-1 pe-1">
+              Privacy
+            </span>
+            <span class="ps-1 pe-1">
+              ·
+            </span>
+            <span class="pointer ps-1 pe-1">
+              Termini
+            </span>
+            <span class="ps-1 pe-1">
+              ·
+            </span>
+            <span class="pointer ps-1 pe-1">
+              Mappa del sito
+            </span>
+            <span class="ps-1 pe-1">
+              ·
+            </span>
+            <span class="pointer ps-1">
+              Dettagli dell'azienda
+            </span>
+          </div>
         </div>
-        <div>
-          LOL
+        <div class="col-12 col-md">
+          <div class="d-flex justify-content-center d-lg-flex justify-content-lg-end">
+              <span class="pointer pe-1">
+                <i class="fa-solid fa-globe"></i> Italiano (IT)
+              </span>
+              <span class="pointer ps-1 pe-1">
+                <i class="fa-brands fa-square-facebook"></i>
+              </span>
+              <span class="pointer ps-1 pe-1">
+                <i class="fa-brands fa-twitter"></i>
+              </span>
+              <span class="pointer ps-1">
+                <i class="fa-brands fa-square-instagram"></i>
+              </span>
+          </div>
         </div>
       </div>
     </div>
