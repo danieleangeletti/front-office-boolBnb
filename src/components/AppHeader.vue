@@ -63,22 +63,24 @@ export default {
                 <!-- Sidebar Body -->
                 <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
                     <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
-                        <li class="hov-underline nav-item mx-4">
-                            <router-link class="nav-link active router-link p-0" :to="{ name: 'Home-page' }" @click="callTheApartments()">
+                        <li class="nav-item mx-4">
+                            <router-link class="hov-underline nav-link active router-link p-0" :to="{ name: 'Home-page' }" @click="callTheApartments()">
                                 Home
                             </router-link>
                         </li>
-                        <li class="hov-underline nav-item mx-4">
-                            <a href="http://localhost:8000/" class="text-black text-decoration-none">
-                                Area Personale
+                        <li class="nav-item mx-4">
+                            <a href="http://localhost:8000/" class="text-black text-decoration-none ">
+                                <span class="hov-underline">
+                                    Area Personale
+                                </span>
                             </a>                            
                         </li>
                     </ul>
 
                     <!-- Login / Sign up -->
-                    <div class="login-box d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3">
+                    <div class="login-box d-flex flex-column flex-lg-row justify-content-center align-items-center gap-5">
                         <a href="http://localhost:8000/login" class="login hov-underline"> Login </a>
-                        <a href="http://localhost:8000/register" class="register text-white text-decoration-none px-3 py-1 rounded-4" style="background-color: #EB5A63;"> Registrati </a>
+                        <a href="http://localhost:8000/register" class="my-primary-button"> Registrati </a>
                     </div>
                 </div>
             </div>
@@ -89,12 +91,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+@use '../assets/scss/partials/mixins.scss' as *;
 @use "../assets/scss/main.scss" as *;
+
+
 header{
     height: 80px;
     background-color: white;
     position: fixed;
     z-index: 2;
+    font-size: 1.2rem;
 
     .navbar-brand, .register{
         margin: 0 20px;
@@ -104,6 +111,7 @@ header{
     .hov-underline {
         position: relative;
         display: inline-block;
+        font-size: 1.2  rem;
         //padding-bottom: 3px;
         cursor: pointer;
         border-bottom: 2px solid transparent;
@@ -132,15 +140,20 @@ header{
     .login{
         color: #EB5A63;
         text-decoration: none;
+        font-weight: 600;
     }
 
-    .register {
-        transition: transform 0.3s ease; /* Aggiungi transizione fluida per l'ingrandimento */
+    .my-primary-button {
 
-        &:hover {
+        @include primary-button-styles;
+        text-decoration: none;
+        padding: 4px 20px;
+        /* transition: transform 0.3s ease; /* Aggiungi transizione fluida per l'ingrandimento */
+
+        /* &:hover {
             transform: scale(1.1); /* Inganna l'elemento del 10% durante l'hover */
-            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); /* Aggiungi ombra */
-        }
+        /*  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); Aggiungi ombra 
+        } */
     }
     
 }
@@ -149,6 +162,10 @@ header{
     .sidebar{
         backdrop-filter: blur(10px);
     }
-  
+
+    .nav-item {
+        padding-bottom: 20px;
+    }
+    
 }
 </style>

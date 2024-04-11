@@ -3,6 +3,7 @@
     background-color: #ec5a64;
     color: white;
     font-weight: 600;
+    text-decoration: none;
     border: 2px solid #ec5a64;
     border-radius: 30px;
     padding-left: 20px;
@@ -12,6 +13,7 @@
     &:hover {
         background-color: white;
         font-weight: 600;
+        text-decoration: none;
         color: #ec5a64;
         border: 2px solid #ec5a64;
         border-radius: 40px; // Modifica la border-radius in base alla tua preferenza

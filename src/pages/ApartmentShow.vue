@@ -127,7 +127,7 @@ methods: {
                 </div>
                 <div class="col-12 col-sm-6 px-5"> 
                     
-                    <ul class="p-0">
+                    <ul class="p-0" id="apartment-details">
                         <li>
                             <h5>{{ apartment.type_of_accomodation }}</h5>
                         </li>
@@ -168,59 +168,60 @@ methods: {
                             </div>
                         </li>
                     </ul>
-                    <div class="">
-                        <a href="#my-contact-form" class="btn btn-outline-dark">
-                            Vai al Form di Contatto
+                    <div class="mobile-centered">
+                        <a href="#contact-form-anchor" class="my-primary-button">
+                            CONTATTA L'HOST
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- INIZIO FORM -->
-<div class="container-fluid my-5">
-    <div class="my-container">
-        <div class="col-12">
-            <!-- messaggio dal backend per invio corretto del messaggio -->
-            <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
-
-            <!-- se il messaggio é stato inviato si applica la classe green form -->
-            <div class="p-3 " id="my-contact-form" :class="flag ? 'green-form':''" >
-                <div class="row">
-                    <div class="col-12 col-sm-6 mb-3">
-                        <label for="name">Il tuo nome</label>
-                        <input class="form-control" type="text" v-model="message.name" name="name" id="name"  maxlength="100">
-                    </div>
-
-                    <div class="col-12 col-sm-6 mb-3">
-                        <label for="last_name">Il tuo cognome</label>
-                        <input class="form-control" type="text" v-model="message.last_name"  name="last_name" id="last_name" maxlength="100">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email">la tua mail<span class="text-danger">*</span></label>
-                    <input class="form-control" type="email" v-model="message.email" name="email" id="email" required maxlength="100">
-                </div>
-
-                <div class="mb-3">
-                    <label for="text">Il tuo messaggio<span class="text-danger">*</span></label>
-                    <textarea  required id="message" v-model="message.text" class="form-control" rows="10" placeholder="Scrivi qui il tuo messaggio" ></textarea>
-                </div>    
-
-                <button @click="sendMessage"  class="btn btn-outline-dark centered">
-                    Invia il messaggio
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- FINE FORM -->
+        
     </div>
         
     <div id="map">
         <!-- MAPPA TOM TOM PER LOCATION APPARTAMENTO -->
     </div>
+    <div   id="contact-form-anchor"></div>
+    <!-- INIZIO FORM -->
+    <div class="container-fluid my-5" id="contact-form-container">
+        <div class="my-container">
+            <div class="col-12">
+                <!-- messaggio dal backend per invio corretto del messaggio -->
+                <!-- <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5> -->
 
+                <!-- se il messaggio é stato inviato si applica la classe green form -->
+                <form class="p-3" @submit.prevent>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 mb-3">
+                            <label for="name">Il tuo nome</label>
+                            <input class="form-control" type="text" v-model="message.name" name="name" id="name"  maxlength="100">
+                        </div>
+
+                        <div class="col-12 col-sm-6 mb-3">
+                            <label for="last_name">Il tuo cognome</label>
+                            <input class="form-control" type="text" v-model="message.last_name"  name="last_name" id="last_name" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">la tua mail<span class="text-danger">*</span></label>
+                        <input class="form-control" type="email" v-model="message.email" name="email" id="email" required maxlength="100">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="text">Il tuo messaggio<span class="text-danger">*</span></label>
+                        <textarea  required id="message" v-model="message.text" class="form-control" rows="10" placeholder="Scrivi qui il tuo messaggio" ></textarea>
+                    </div>    
+
+                    <button @click="sendMessage"  class="my-primary-button centered">
+                        INVIA IL MESSAGGIO
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- FINE FORM -->
     
 
 <!-- INIZIO MODAL -->
@@ -244,12 +245,14 @@ methods: {
 
 
 <style lang="scss" scoped>
+
+@use '../assets/scss/partials/mixins.scss' as *;
 @use "../assets/scss/main.scss" as *;
 
 .container-fluid {
     padding-left: 0;
     padding-right: 0;
-    padding-top: 50px;
+    
 }
 
 
@@ -258,6 +261,17 @@ methods: {
         width: 100%; 
         margin: 0;
     }
+
+    .mobile-centered {
+        text-align: center; 
+        display: flex;
+        justify-content: center;
+    }
+
+    #apartment-details {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 }
 
 @media (min-width: 576px) {
@@ -265,8 +279,14 @@ methods: {
         width: 1400px;
         margin: 0 auto;
     }
-}
 
+    .container-fluid {
+    padding-top: 50px;
+    }
+}
+a {
+    text-decoration: none;
+}
 .centered {
     display: block;
     margin: auto;
@@ -292,9 +312,11 @@ ul {
     }
 }
 
-.green-form{
-    border: 3px solid green;
-    border-radius: 10px;
+.my-primary-button {
+  @include primary-button-styles;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding: 8px 40px;
 }
 
 #map{
