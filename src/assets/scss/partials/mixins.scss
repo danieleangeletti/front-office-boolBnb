@@ -1,0 +1,19 @@
+@mixin primary-button-styles {
+    $transition-duration: 0.4s; // Imposta il tempo di transizione fisso
+    background-color: #ec5a64;
+    color: white;
+    font-weight: 600;
+    border: 2px solid #ec5a64;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: background-color $transition-duration ease, border-color $transition-duration ease, color $transition-duration ease;
+
+    &:hover {
+        background-color: white;
+        font-weight: 600;
+        color: #ec5a64;
+        border: 2px solid #ec5a64;
+        border-radius: 40px; // Modifica la border-radius in base alla tua preferenza
+    }
+}

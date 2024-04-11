@@ -160,14 +160,14 @@ export default {
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Attenzione!</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   Devi scegliere un indirizzo dalla lista dei suggerimenti
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="my-primary-button" data-bs-dismiss="modal">CHIUDI</button>
                 </div>
               </div>
             </div>
@@ -201,6 +201,9 @@ export default {
         
 
 <style lang="scss" scoped>
+
+@use '../assets/scss/partials/mixins.scss' as *;
+
 @use "../assets/scss/main" as *;
 .user-search {
   width: 400px;
@@ -208,32 +211,19 @@ export default {
 }
 
 .my-primary-button {
-  background-color: #ec5a64;
-  color: white;
-  font-weight: 600;
-  border: 1px solid #ec5a64;
-  border-radius: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
-  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+  @include primary-button-styles;
 }
 
-.my-primary-button:hover {
-  background-color: white;
-  font-weight: 600;
+.btn-close {
   color: #ec5a64;
-  border: 2px solid #ec5a64;
-  border-radius: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
-  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 .list-box{
-  width: 400px;
+  width: 500px;
   #suggestions {
     background-color: white;
-    border-radius: 10px;
+    /* border: 1px solid #ec5a64; */
+    border-radius: 5px;
     padding: 0;
     position: absolute;
     left: 0;
