@@ -28,53 +28,127 @@ export default {
 </script>
 
 <template>
-  <header class="container-fluid text-center">
-    <div class="row justify-content-between align-items-center h-100">
-      <div class="col">
-        <div class="img-box w-100">
-          <img src="../../public/img/logo.jpg" alt="logo BoolBnb" />
+  <header class="container-fluid text-center shadow-sm">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top sticky-top vh-10 z-2 position-absolute">
+        <div class="container-fluid">
+            <router-link class="navbar-brand router-link" :to="{ name: 'Home-page' }" @click="callTheApartments()">
+                <img src="../../public/img/logos/boolbnb-rosa-trasparente-150px.PNG" class="logo" alt="logo BoolBnb" />
+            </router-link>
+
+            <!-- Toggle -->
+            <button class="navbar-toggler shadow-none border-0" 
+            type="button" 
+            data-bs-toggle="offcanvas" 
+            data-bs-target="#offcanvasNavbar" 
+            aria-controls="offcanvasNavbar" 
+            >
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Sidebar Header -->
+            <div class="sidebar offcanvas offcanvas-end" 
+                tabindex="-1" 
+                id="offcanvasNavbar" 
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">                    
+                    <img src="../../public/img/logos/boolbnb-rosa-trasparente-150px.PNG" alt="logo BoolBnb" />
+                    <button 
+                    type="button" 
+                    class="btn-close shadow-none" 
+                    data-bs-dismiss="offcanvas" 
+                    aria-label="Close"></button>
+                </div>
+
+                <!-- Sidebar Body -->
+                <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
+                    <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
+                        <li class="hov-underline nav-item mx-4">
+                            <router-link class="nav-link active router-link p-0" :to="{ name: 'Home-page' }" @click="callTheApartments()">
+                                Home
+                            </router-link>
+                        </li>
+                        <li class="hov-underline nav-item mx-4">
+                            <a href="http://localhost:8000/" class="text-black text-decoration-none">
+                                Area Personale
+                            </a>                            
+                        </li>
+                    </ul>
+
+                    <!-- Login / Sign up -->
+                    <div class="login-box d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3">
+                        <a href="http://localhost:8000/login" class="login hov-underline"> Login </a>
+                        <a href="http://localhost:8000/register" class="register text-white text-decoration-none px-3 py-1 rounded-4" style="background-color: #EB5A63;"> Registrati </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col">
-        <router-link class="router-link"   :to="{ name: 'Home-page' }"
-          >
-          <span @click="callTheApartments()">Home
-          </span>
-          </router-link
-        >
-        <router-link class="router-link" :to="{ name: 'advanced-search' }"
-          >Ricerca avanzata</router-link
-        >
-      </div>
-      <div class="col">
-        <a href="http://localhost:8000/">Vai all'area riservata</a>
-      </div>
-    </div>
+    </nav>
   </header>
+
 </template>
 
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
+header{
+    height: 80px;
+    background-color: white;
+    position: fixed;
+    z-index: 2;
 
-header {
-  height: 10vh;
-  border-bottom: 1px solid lightgrey;
-  background-color: white;
-  position: fixed;
-  z-index: 2;
-  .router-link {
-    padding: 1rem 2rem;
-    color: #717171;
-    text-decoration: none;
-    border-radius: 30px;
-  }
-  .img-box{
-    height: 9vh;
-    img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .navbar-brand, .register{
+        margin: 0 20px;
+        border-radius: 20px;
     }
-  }
+
+    .hov-underline {
+        position: relative;
+        display: inline-block;
+        //padding-bottom: 3px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease; /* Aggiungi una transizione fluida per l'effetto hover */
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+    /* Animazione per la sottolineatura */
+    .hov-underline::after {
+    content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0; /* Inizia senza larghezza */
+        height: 2px; /* Altezza della sottolineatura */
+        background-color: #EB5A63; 
+        transition: width 0.3s ease; /* Aggiungi una transizione fluida per l'animazione */
+        transform: scale(1.1);
+    }
+    .hov-underline:hover::after {
+        width: 100%; /* Espandi la larghezza al 100% durante l'hover */
+        
+    }
+    
+    .login{
+        color: #EB5A63;
+        text-decoration: none;
+    }
+
+    .register {
+        transition: transform 0.3s ease; /* Aggiungi transizione fluida per l'ingrandimento */
+
+        &:hover {
+            transform: scale(1.1); /* Inganna l'elemento del 10% durante l'hover */
+            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); /* Aggiungi ombra */
+        }
+    }
+    
+}
+@media (max-width:768px) {
+    
+    .sidebar{
+        backdrop-filter: blur(10px);
+    }
+  
 }
 </style>
