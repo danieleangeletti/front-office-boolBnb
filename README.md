@@ -143,3 +143,79 @@ header {
 
   
 </style>
+
+
+<div class="modal" :class="{ 'is-active': showModal }">
+            <div class="modal-background" @click="closeModal"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Contatta l'host</p>
+                    <button class="delete" aria-label="close" @click="closeModal"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!-- Inserisci il form qui -->
+                    <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
+                    <form class="p-3 " :class="flag ? 'green-form':''" @submit.prevent method="post">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <label for="name"> Inserisci il tuo nome </label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    v-model="message.name"
+                                    name="name"
+                                    id="name"
+                                    cols="30"
+                                    rows="10"
+                                    
+                                    maxlength="100"
+                                />
+                            </div>
+
+                            <div class="col-12 col-sm-6 mb-3">
+                                <label for="last_name"> Inserisci il tuo cognome </label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    v-model="message.last_name"
+                                    name="last_name"
+                                    id="last_name"
+                                    cols="30"
+                                    rows="10"
+                                    
+                                    maxlength="100"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email"> Inserisci la tua mail <span class="text-danger">*</span></label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                v-model="message.email"
+                                name="email"
+                                id="email"
+                                cols="30"
+                                rows="10"
+                                required
+                                maxlength="100"
+                            />
+                        </div>
+
+                            <div class="mb-3">
+                            <label for="text"> Scrivi un messaggio all'host <span class="text-danger">*</span></label>
+                            <textarea  required id="message" v-model="message.text" class="form-control" placeholder="Scrivi qui il tuo messaggio" ></textarea>
+                        </div>
+
+                        <button @click="sendMessage" class="btn btn-outline-dark">
+                        Invia il messaggio
+                        </button>
+                        
+                    </form>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" @click="sendMessage">Invia</button>
+                    <button class="button" @click="closeModal">Annulla</button>
+                </footer>
+            </div>
