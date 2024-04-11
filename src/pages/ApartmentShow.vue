@@ -11,15 +11,18 @@ export default {
         last_name: null,
         text: null,
         email: null,
-        term: null
+       
       },
       showModal: false,
+       term: null
   };
 },
 
 methods: {
     sendMessage() {
       // Esegui la chiamata API POST
+      
+      console.log('messaggio',this.message)
       axios
         .post(
           `http://127.0.0.1:8000/api/store/${this.$route.params.slug}`,
@@ -37,14 +40,15 @@ methods: {
         )
         .then((response) => {
           // Gestisci la risposta dal backend
-          console.log("Risposta dal backend:", response.data);
+        //   console.log("Risposta dal backend:", response.data);
+          
             if(response.data.success == true){
               this.message.name = null,
               this.message.last_name = null,
               this.message.text= null,
               this.message.email= null
               this.flag = true
-              /* this.showModal = true */
+              this.showModal = true 
               this.backendMessage = response.data.result
           }
           
@@ -57,13 +61,27 @@ methods: {
     closeModal() {
         this.showModal = false;
     },
+    initMap(){
+        
+        let center = [this.apartment.longitude,this.apartment.latitude]
+        const map = tt.map({
+            key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+            container:"map",
+            center:center,
+            zoom:13
+        })
+        map.on('load',() => {
+            new tt.Marker().setLngLat(center).addTo(map)
+        })
+    }
 },
+
     created() {
         axios
             .get(`http://localhost:8000/api/apartments/${this.$route.params.slug}`)
             .then((response) => {
                 this.apartment = response.data.result;
-                console.log("risposta api", response);        
+                // console.log("risposta api", response);        
             })
             
             .catch((error) => {
@@ -71,16 +89,7 @@ methods: {
         });
     },
     mounted(){
-        let center = [this.apartment.longitude,this.apartment.latitude]
-        const map = tt.map({
-            key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
-            container:"ma",
-            center:center,
-            zoom:13
-        })
-        map.on('load',() => {
-            new tt.Marker().setLngLat(center).addTo(map)
-        })
+        this.initMap();
         fetch('https://api.ipify.org?format=json')
         .then(x => x.json())
         .then(({ ip }) => {
@@ -91,12 +100,13 @@ methods: {
                 ipAddress: this.term
             }
             ).then((response)=>{
-                console.log('risposta view',response)
+                // console.log('risposta view',response)
                 
             })
             });
-  }
-            
+          
+    },
+         
 };
 </script>
     
@@ -174,7 +184,7 @@ methods: {
             <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
 
             <!-- se il messaggio é stato inviato si applica la classe green form -->
-            <form class="p-3 " id="my-contact-form" :class="flag ? 'green-form':''" @submit.prevent method="post">
+            <div class="p-3 " id="my-contact-form" :class="flag ? 'green-form':''" >
                 <div class="row">
                     <div class="col-12 col-sm-6 mb-3">
                         <label for="name">Il tuo nome</label>
@@ -189,7 +199,7 @@ methods: {
 
                 <div class="mb-3">
                     <label for="email">la tua mail<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" v-model="message.email" name="email" id="email" required maxlength="100">
+                    <input class="form-control" type="email" v-model="message.email" name="email" id="email" required maxlength="100">
                 </div>
 
                 <div class="mb-3">
@@ -197,25 +207,25 @@ methods: {
                     <textarea  required id="message" v-model="message.text" class="form-control" rows="10" placeholder="Scrivi qui il tuo messaggio" ></textarea>
                 </div>    
 
-                <button @click="sendMessage" class="btn btn-outline-dark centered">
+                <button @click="sendMessage"  class="btn btn-outline-dark centered">
                     Invia il messaggio
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 <!-- FINE FORM -->
     </div>
         
-    <div id="ma">
+    <div id="map">
         <!-- MAPPA TOM TOM PER LOCATION APPARTAMENTO -->
     </div>
 
     
 
 <!-- INIZIO MODAL -->
-    <section id="contact-form-modal">
-        <div v-if="showModal" class="my-modal">
+    <section >
+        <div id="contact-form-modal" v-if="showModal" class="my-modal">
             <div class="my-modal-content">
                 
                 <!-- Icona che ci permette di chiudere il modale attraverso la funzione closeModal -->
@@ -287,10 +297,42 @@ ul {
     border-radius: 10px;
 }
 
-#ma{
+#map{
     width: 100%;
     height: 500px;
 }
+.my-modal { 
+        position: fixed; 
+        z-index: 1; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
 
+    .my-modal-content {
+        background-color: red;
+        margin: 15% auto; 
+        padding: 20px 30px;
+        border: 2px solid #333333;
+        border-radius: 12px;
+        width: 1000px;
+        color: white;
+
+            >*{
+            padding-bottom: 10px;
+        }
+        i {
+            color: #333333;
+        }
+        i:hover {
+            color: white;
+        }
+        #user-data {
+            text-align: start;
+        }
+    }
 
 </style>
