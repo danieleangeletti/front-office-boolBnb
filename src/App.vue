@@ -25,7 +25,7 @@ export default {
 <template>
 <div class="container-fluid position-relative p-0">
     <div class="my-welcome">
-        <img class="gsap-logo position-absolute " src="../../public/img/logos/boolairbnb-favicon.PNG" alt="">
+        <img class="gsap-logo position-absolute " src="../../public/img/logos/boolairbnb-favicon-white.PNG" alt="">
         <img class="gsap-logo-2 position-absolute " src="../../public/img/logos/boolairbnb-bianco-trasparente600px.PNG" alt="">
     </div>
 
@@ -47,7 +47,7 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 3;
-  background-color: #13192F;
+  background-color: #EC5A64;
   .gsap-logo{
    
     width: 300px;
