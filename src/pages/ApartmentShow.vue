@@ -13,10 +13,18 @@ export default {
         email: null,
         term: null
       },
+      showModal: false,
   };
 },
 
-  methods: {
+methods: {
+    sendMessageAndOpenModal() {
+        this.sendMessage();
+        this.openModal();
+    },
+    openModal() {
+        
+    },
     sendMessage() {
       // Esegui la chiamata API POST
       axios
@@ -52,7 +60,7 @@ export default {
           console.error("Errore nella chiamata API:", error);
         });
     },
-  },
+},
     created() {
         axios
             .get(`http://localhost:8000/api/apartments/${this.$route.params.slug}`)
@@ -66,7 +74,6 @@ export default {
         });
     },
     mounted(){
-        
         let center = [this.apartment.longitude,this.apartment.latitude]
         const map = tt.map({
             key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
@@ -77,8 +84,7 @@ export default {
         map.on('load',() => {
             new tt.Marker().setLngLat(center).addTo(map)
         })
-        
-           fetch('https://api.ipify.org?format=json')
+        fetch('https://api.ipify.org?format=json')
         .then(x => x.json())
         .then(({ ip }) => {
             this.term = ip;
@@ -99,143 +105,171 @@ export default {
     
 
 <template>
-    <div class="container">
-        <div class="row">
-            <h1>
-            {{ apartment.name }}
-            </h1>
-            <div class="col-12 col-sm-6">
-                <div class="card">
-                    <div class="img-box">
-                        <img
-                            :src="'http://127.0.0.1:8000/storage/' + apartment.img_cover_path"
-                            alt="Cover Image"
-                        />
+    <div class="container-fluid mb-5">
+        <div class="my-container">
+            <div class="row">
+                <div class="text-center mb-4">
+                        <h1>
+                            {{ apartment.name }}
+                        </h1>
                     </div>
+                <div class="col-12 col-sm-6 px-5"> <!-- Modifica qui -->
+                    <div class="img-box">
+                        <img :src="'http://127.0.0.1:8000/storage/' + apartment.img_cover_path" alt="Cover Image"/>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 px-5"> <!-- Modifica qui -->
+                    
                     <ul class="p-0">
                         <li>
                             <h5>{{ apartment.type_of_accomodation }}</h5>
                         </li>
                         <li>
-                            <span>€{{ Math.floor(apartment.price) }} </span>
-                            <span>notte. </span>
-                            <span class="night ms-1">€{{ Math.floor(apartment.price * apartment.n_guests) }} in totale</span>
-                        </li>
-                        <li>
-                            {{ apartment.n_guests }} Ospiti | {{ apartment.n_rooms }} Stanze | {{ apartment.n_beds }} Letti | {{ apartment.n_baths }} Bagni | {{ apartment.mq }} m²
-                        </li>
-                        <li>
                             L'alloggio si trova in {{ apartment.address }}
                         </li>
-
-
+                        <li>
+                            Il costo é di <span>{{ apartment.price }} € per notte. </span>
+                        </li>
+                        <li class="mt-4"> <!-- Rimuovi la classe d-flex -->
+                            <div>
+                                Caratteristiche dell'alloggio:
+                                <ul class="p-0">
+                                    <li>
+                                        Numero di ospiti: {{ apartment.n_guests }}
+                                    </li>
+                                    <li>
+                                        Numero di stanze: {{ apartment.n_rooms }}
+                                    </li>
+                                    <li>
+                                        Numero di letti: {{ apartment.n_beds }}
+                                    </li>
+                                    <li>
+                                        Numero di bagni: {{ apartment.n_baths }}
+                                    </li>
+                                    <li>
+                                        Metratura {{ apartment.mq }} m²
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="my-4">
+                                Servizi dell'appartamento:
+                                <ul class="p-0">
+                                    <li v-for="service in apartment.services" :key="service.id">
+                                        <i :class="'fa-solid'  + ' '  + service.icon"></i><span>&nbsp&nbsp{{ service.type_of_service }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
+                    <div class="">
+                        <a href="#my-contact-form" class="btn btn-outline-dark">
+                            Vai al Form di Contatto
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-sm-6">
-                <div id="ma">
-
-                </div>
-                <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
-                <form class="p-3 " :class="flag ? 'green-form':''" @submit.prevent method="post">
-                    <div class="row">
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <label for="name"> Inserisci il tuo nome </label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        v-model="message.name"
-                                        name="name"
-                                        id="name"
-                                        cols="30"
-                                        rows="10"
-                                       
-                                        maxlength="100"
-                                    />
-                                </div>
-
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <label for="last_name"> Inserisci il tuo cognome </label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        v-model="message.last_name"
-                                        name="last_name"
-                                        id="last_name"
-                                        cols="30"
-                                        rows="10"
-                                       
-                                        maxlength="100"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                            <label for="email"> Inserisci la tua mail <span class="text-danger">*</span></label>
-                            <input
-                                class="form-control"
-                                type="text"
-                                v-model="message.email"
-                                name="email"
-                                id="email"
-                                cols="30"
-                                rows="10"
-                                required
-                                maxlength="100"
-                            />
-                            </div>
-
-                            <div class="mb-3">
-                            <label for="text"> Scrivi un messaggio all'host <span class="text-danger">*</span></label>
-                            <textarea  required id="message" v-model="message.text" class="form-control" placeholder="Leave a comment here" ></textarea>
-                        </div>
-
-                        <button @click="sendMessage" class="btn btn-outline-dark">
-                        Invia il messaggio
-                        </button>
-                        
-                </form>
             </div>
         </div>
     </div>
+        
+    <div id="ma">
+        <!-- MAPPA TOM TOM PER LOCATION APPARTAMENTO -->
+    </div>
+
+    <!-- INIZIO FORM -->
+<div class="container-fluid my-5">
+    <div class="my-container">
+        <div class="col-12">
+            <!-- messaggio dal backend per invio corretto del messaggio -->
+            <h5 class="text-center mt-2" v-if="flag">{{ backendMessage }}</h5>
+
+            <!-- se il messaggio é stato inviato si applica la classe green form -->
+            <form class="p-3 " id="my-contact-form" :class="flag ? 'green-form':''" @submit.prevent method="post">
+                <div class="row">
+                    <div class="col-12 col-sm-6 mb-3">
+                        <label for="name">Il tuo nome</label>
+                        <input class="form-control" type="text" v-model="message.name" name="name" id="name"  maxlength="100">
+                    </div>
+
+                    <div class="col-12 col-sm-6 mb-3">
+                        <label for="last_name">Il tuo cognome</label>
+                        <input class="form-control" type="text" v-model="message.last_name"  name="last_name" id="last_name" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">la tua mail<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" v-model="message.email" name="email" id="email" required maxlength="100">
+                </div>
+
+                <div class="mb-3">
+                    <label for="text">Il tuo messaggio<span class="text-danger">*</span></label>
+                    <textarea  required id="message" v-model="message.text" class="form-control" rows="10" placeholder="Scrivi qui il tuo messaggio" ></textarea>
+                </div>    
+
+                <button @click="sendMessageAndOpenModal" class="btn btn-outline-dark centered">
+                    Invia il messaggio
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+    <!-- FINE FORM -->
 </template>
 
 
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
-.card {
- 
-    padding: 16px;
-    border: none !important;
-        .night {
-        font-size: 0.9rem;
-        color: gray;
-        text-decoration: underline;
-        }
-    .img-box {
-        img {
-            border-radius: 20px;
-            width: 100%;
-            height: 100%;
-        }
-    }
-    ul {
-        li {
-            list-style: none;
-        }
+
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 50px;
+}
+
+
+@media (max-width: 575px) {
+    .my-container {
+        width: 100%; 
+        margin: 0;
     }
 }
+
+@media (min-width: 576px) {
+    .my-container {
+        width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.centered {
+    display: block;
+    margin: auto;
+}
+
+ul {
+    li {
+        list-style: none;
+    }
+}
+
+.img-box {
+    img {
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .green-form{
     border: 3px solid green;
     border-radius: 10px;
 }
-@media (max-width: 576px) {
-    .my-card {
-        width: calc(100% / 1);
-    }
-}
+
 #ma{
     width: 100%;
-    height: 400px;
+    height: 500px;
 }
+
+
 </style>
