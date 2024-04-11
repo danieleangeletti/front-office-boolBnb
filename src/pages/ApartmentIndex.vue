@@ -3,6 +3,7 @@ import ApartmentComponent from "../components/ApartmentComponent.vue";
 import FilteredApartmentComponent from "../components/FilteredApartmentComponent.vue";
 import axios from "axios";
 import { store } from "../../store.js";
+import { gsap } from "gsap";
 export default {
   data() {
     return {
@@ -24,18 +25,20 @@ export default {
             this.store.notSponsoredApartments = []
             this.store.sponsoredApartments =  []
           for(let i = 0; i < this.store.apartments.length; i ++){
-            if(response.data.result[i].sponsorships.length > 0){
-
+            if(response.data.result[i].sponsorships.length > 0 && response.data.result[i].availability == 1){
               this.store.sponsoredApartments.push(response.data.result[i]) 
             }
           }
-           for(let i = 0; i < this.store.apartments.length; i ++){
-            if(response.data.result[i].sponsorships.length == 0){
+           for(let i = 0; i < this.store.apartments.length; i ++ ){
+            if(response.data.result[i].sponsorships.length == 0 && response.data.result[i].availability == 1){
 
               this.store.notSponsoredApartments.push(response.data.result[i]) 
             }
           }
         });
+              
+
+                
     },
     searchApartment() {
       axios
@@ -64,9 +67,9 @@ export default {
     
     handleInputClick() {
       // Qui puoi inserire la logica da eseguire quando l'utente clicca sull'input
-      let suggestionsContainer = document.getElementById("suggestions");
-        let addressInput = this.store.userSearch;
-          const input = addressInput.trim();
+            let suggestionsContainer = document.getElementById("suggestions");
+            let addressInput = this.store.userSearch;
+            const input = addressInput.trim();
             store.isChecked = false
             if (input.length === 0) {
                 suggestionsContainer.innerHTML = "";
@@ -110,15 +113,19 @@ export default {
     ApartmentComponent,
     FilteredApartmentComponent,
   },
-  mounted() {
+ mounted() {
+  setTimeout(() => {
     this.callTheApartmentsNormal();
-   
-  },
+  }, 2200);
+  gsap.from(".sponsorized", { x: -500, duration: 1, delay:3 ,ease:'power4'});
+
+}
+
 };
 </script>
 
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid ">
     <div class="row">
       <div class="col-12">
         <div class=" d-flex flex-column align-items-center ">
@@ -170,21 +177,22 @@ export default {
       </div>
       <!-- v-if="store.FilteredApartments.length === 0" -->
       <div class="col-12">
-        <h1>Appartamenti in evidenza</h1>
+        <h1 class="sponsorized">Appartamenti in evidenza</h1>
           <div class="d-flex flex-wrap border-bottom ">
             <ApartmentComponent
               v-for="(elem, i) in store.sponsoredApartments"
               :apartment="elem"
               :key="i"
+              class="box"
             />
-        </div>
-        <div class=" d-flex flex-wrap">
-          <ApartmentComponent
+            <ApartmentComponent
             v-for="(x, j) in store.notSponsoredApartments"
             :apartment="x"
             :key="j"
+            class="box"
           />
         </div>
+       
       </div>
     </div>
   </div>
