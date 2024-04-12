@@ -143,19 +143,20 @@ export default {
     <div class="row">
       <div class="col-12">
          <div class=" d-flex flex-column align-items-center"> <!-- DA SISTEMARE CENTRATURA DELLA LABEL -->
-          <div class="d-flex flex-row justify-content-start">
-            <div>
-              <label for="first-search">Cerca Appartamenti entro 20km</label>
+          <div class="d-flex flex-column">
+            <div class="px-2">
+              <label for="first-search mt-2">Cerca Appartamenti entro 20km:</label>
             </div>
-          </div>
-          <div class="d-flex">
-            <input @keyup="handleInputClick" class="form-control my-2 user-search" v-model="store.userSearch" type="text" id="first-search" placeholder="Inserisci un indirizzo qui"/>
+            <div class="d-flex">
+              <input @keyup="handleInputClick" class="form-control my-2 user-search" v-model="store.userSearch" type="text" id="first-search" placeholder="Inserisci un indirizzo qui"/>
             <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
               SEARCH
             </router-link>
             <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
               SEARCH
             </button>
+            </div>
+            
           </div>
           <div class="position-relative list-box">
             <ul id="suggestions">

@@ -233,9 +233,29 @@ methods: {
                 <span class="close" @click="closeModal">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
-                <h3>
+                <h3 class="text-center my-5">
                     Il tuo messaggio é stato inviato correttamente!
                 </h3>
+                <!-- <div class="mb-5">
+                    <h5>
+                        Ecco un reminder di quello che hai scritto:
+                    </h5>
+                    <ul class="p-0">
+                        <li>
+                            Nome: {{ message.name }}
+                        </li>
+                        <li>
+                            Cognome: {{ message.last_name }}
+                        </li>
+                        <li>
+                            La tua e-mail: {{ message.email }}
+                        </li>
+                        <li>
+                            Testo del messaggio: {{ message.text }}
+                        </li>
+
+                    </ul>
+                </div> -->
 
             </div>
         </div>
@@ -296,6 +316,7 @@ a {
         float: right;
         font-size: 28px;
         font-weight: bold;
+        cursor: pointer;
     }
 
 ul {
@@ -323,6 +344,7 @@ ul {
     width: 100%;
     height: 500px;
 }
+
 .my-modal { 
         position: fixed; 
         z-index: 1; 
@@ -335,10 +357,9 @@ ul {
     }
 
     .my-modal-content {
-        background-color: red;
+        background-color: #ec5a64;
         margin: 15% auto; 
         padding: 20px 30px;
-        border: 2px solid #333333;
         border-radius: 12px;
         width: 1000px;
         color: white;
@@ -347,7 +368,7 @@ ul {
             padding-bottom: 10px;
         }
         i {
-            color: #333333;
+            color: white;
         }
         i:hover {
             color: white;
