@@ -142,35 +142,29 @@ export default {
   <div class="container-fluid ">
     <div class="row">
       <div class="col-12">
-        <div class=" d-flex flex-column align-items-center ">
-           
+         <div class=" d-flex flex-column align-items-center"> <!-- DA SISTEMARE CENTRATURA DELLA LABEL -->
+          <div class="d-flex flex-row justify-content-start">
+            <div>
+              <label for="first-search">Cerca Appartamenti entro 20km</label>
+            </div>
+          </div>
           <div class="d-flex">
-              <input
-            @keyup="handleInputClick"
-              class="form-control my-2 user-search"
-              v-model="store.userSearch"
-              type="text"
-            />
-            <router-link
-              v-if="store.isChecked"
-              :to="{ name: 'advanced-search' }"
-              @click="searchApartment"
-              class="my-primary-button m-2" id="search-button-after-check"
-            >
+            <input @keyup="handleInputClick" class="form-control my-2 user-search" v-model="store.userSearch" type="text" id="first-search" placeholder="Inserisci un indirizzo qui"/>
+            <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
               SEARCH
             </router-link>
             <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                SEARCH
+              SEARCH
             </button>
           </div>
-            <div class="position-relative list-box">
-                <ul id="suggestions">
-
-                </ul>
-            </div>
-            <div class="scroll-to-top" @click="scrollToTop">
-                <i class="fas fa-arrow-up"></i>
-            </div>
+          <div class="position-relative list-box">
+            <ul id="suggestions">
+              <!--SUGGERIMENTI INDIRIZZI GENERATI DA TOMTOM-->
+            </ul>
+          </div>
+          <div class="scroll-to-top" @click="scrollToTop">
+            <i class="fas fa-arrow-up"></i>
+          </div>
          
 
           <!-- Modal -->

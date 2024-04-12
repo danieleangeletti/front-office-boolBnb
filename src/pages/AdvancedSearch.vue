@@ -148,18 +148,19 @@ export default {
                 </div> 
             </div>
             <div class="mb-3 d-flex justify-content-center">
-                <button @click="advancedResearch()" type="submit" class="btn btn-outline-dark m-2">
+                <button @click="advancedResearch()" type="submit" class="my-primary-button m-2">
                     SEARCH
                 </button>
             </div>
         </div>
         <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap my-card">
-           
                 <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
-            
             </div>
-            <div v-else>
-                non ci sono appartamenti in questa posizione
+            <div v-else class="text-center">
+                <h3 class="mb-5">
+                    Non ci sono appartamenti in questa posizione, prova con un nuovo indirizzo!
+                </h3>
+                
             </div>
             <!-- <div id="ma" class="col-6">
       
@@ -169,6 +170,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+@use '../assets/scss/partials/mixins.scss' as *;
+
 #ma{
    margin-top: 70px;
     height: 800px;
@@ -181,6 +185,10 @@ export default {
             width: 100%;
         }
     }
+}
+
+.my-primary-button {
+    @include primary-button-styles;
 }
 
 .my-card {

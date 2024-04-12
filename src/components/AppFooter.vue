@@ -325,7 +325,8 @@ export default {
 </script>
 
 <template>
-  <div class="row mt-4">
+  <div class="container-fluid">
+    <div class="row mt-4">
     <h3 class="text-center">I nostri Sponsor</h3>
     <div class="col-12 my-5">
       <swiper
@@ -357,6 +358,7 @@ export default {
         </swiper-slide>
       </swiper>
     </div>
+  </div>
   </div>
 
   <footer class="footer-bg">
