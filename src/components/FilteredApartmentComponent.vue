@@ -28,6 +28,9 @@ export default {
                 <li>
                     {{apartment.price }}€ per notte.
                 </li>
+                <li>
+                    {{ Math.floor(apartment.distance) }}Km di distanza. 
+                </li>
             </ul>
         </router-link>
     </div>
