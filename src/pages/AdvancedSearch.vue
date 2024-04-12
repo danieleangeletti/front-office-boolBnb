@@ -33,43 +33,76 @@ export default {
             })
             .then(response=>{
                 this.store.services = response.data.result;
-                
-            //    let map = this.myMap
-            //     let markerElement = null
-            //     for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-            //           var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
-                       
-            //         markerElement = marker.getPopup();
-            //         markerElement.className = 'apartment-marker';
-            //         markerElement.innerHTML = `
-            //         <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
-            //         <div class="marker-content">
-            //             <h3>${this.store.FilteredApartments[i].name}</h3>
-            //             <p>${this.store.FilteredApartments[i].free_form_address}</p>
-            //         </div>
-            //         `;
-            //         this.map.on('load',() => {
-            //             marker
-            //             })
-            //     }
+
             });
         },
-        // initializeMap(){
-        //      this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
-        //         this.myMap = tt.map({
-        //             key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
-        //             container:"ma",
-        //             center:this.center,
-        //             zoom:10
-        //         })
-        // },
-                      
-                            
-                    
-                    
-                     
-                     
-                    
+           searchApartment() {
+      axios
+        // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
+        .get(
+          "https://api.tomtom.com/search/2/geocode/.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+          {
+            params: {
+              query: this.store.userSearch,
+            },
+          }
+        )
+        .then((responseOne) => {
+          this.store.firstApi = responseOne.data.results[0].position;
+          axios.get("http://localhost:8000/api/getApartments", {
+            params: {
+              lat: this.store.firstApi.lat,
+              lon: this.store.firstApi.lon
+            }
+          })
+          .then((response) => {
+            this.store.FilteredApartments = response.data.result;
+          })
+        });
+    },
+         handleInputClick() {
+
+            // Qui puoi inserire la logica da eseguire quando l'utente clicca sull'input
+            let suggestionsContainer = document.getElementById("suggestions");
+            let addressInput = this.store.userSearch;
+            const input = addressInput.trim();
+            store.isChecked = false
+            if (input.length === 0) {
+                suggestionsContainer.innerHTML = "";
+                return;
+            }
+
+            fetch(
+                    `https://api.tomtom.com/search/2/search/${input}.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct`
+                )
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsContainer.innerHTML = ""; // Svuota i suggerimenti precedenti
+
+                    data.results.forEach(result => {
+                        const suggestion = document.createElement("li");
+                        suggestion.classList.add('suggestion-list')
+                        //  suggestion.style.backgroundColor = "white"; // Applica lo stile inline
+                        //   suggestion.style.borderRadius = "10px";
+                        //   suggestion.style.padding = "4px";
+                        //   suggestion.style.listStyle = "none";
+                        //   suggestion.style.width = "200px";
+                        suggestion.textContent = result.address.freeformAddress;
+                        suggestion.addEventListener("click", function() {
+                          store.userSearch = result.address.freeformAddress;
+                          suggestionsContainer.innerHTML = "";
+                          store.isChecked = true
+                        });
+                        suggestionsContainer.appendChild(suggestion);
+                    });
+                    document.addEventListener("click", function() {
+                        
+                        suggestionsContainer.innerHTML = "";
+                    })
+                })
+                .catch(error => console.error("Errore durante il recupero dei suggerimenti:", error));
+        
+    },  
         advancedResearch(){
         axios
         // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
@@ -172,6 +205,23 @@ export default {
                 <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
             </div>
             <div v-else class="text-center">
+                <label for="alterned-input">Inserisci un indirizzo alternativo
+                </label>
+                <input @keyup="handleInputClick" v-model="store.userSearch" class="form-control w-50" id="alterned-input" type="text">
+                    <div class="position-relative list-box">
+                        <ul id="suggestions">
+                        <!--SUGGERIMENTI INDIRIZZI GENERATI DA TOMTOM-->
+                        </ul>
+                    </div>
+                       <div class="d-flex">
+             
+                <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
+                    SEARCH
+                </router-link>
+                <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    SEARCH
+                </button>
+                </div>
                 <h3 class="mb-5">
                     Non ci sono appartamenti in questa posizione, prova con un nuovo indirizzo!
                 </h3>
@@ -190,6 +240,10 @@ export default {
 <style lang="scss" scoped>
 
 @use '../assets/scss/partials/mixins.scss' as *;
+
+#alterned-input{
+    margin: 0 auto;
+}
 
 #ma{
    margin-top: 70px;

@@ -104,6 +104,31 @@ export default {
         .then((data) => {
           suggestionsContainer.innerHTML = ""; // Svuota i suggerimenti precedenti
 
+                    data.results.forEach(result => {
+                        const suggestion = document.createElement("li");
+                        suggestion.classList.add('suggestion-list')
+                        //  suggestion.style.backgroundColor = "white"; // Applica lo stile inline
+                        //   suggestion.style.borderRadius = "10px";
+                        //   suggestion.style.padding = "4px";
+                        //   suggestion.style.listStyle = "none";
+                        //   suggestion.style.width = "200px";
+                        suggestion.textContent = result.address.freeformAddress;
+                        suggestion.addEventListener("click", function() {
+                        store.userSearch = result.address.freeformAddress;
+                        suggestionsContainer.innerHTML = "";
+                        store.isChecked = true
+                        });
+                        suggestionsContainer.appendChild(suggestion);
+                    });
+                    document.addEventListener("click", function() {
+                        
+                        suggestionsContainer.innerHTML = "";
+                    })
+                })
+                .catch(error => console.error("Errore durante il recupero dei suggerimenti:", error));
+        
+    }
+
           data.results.forEach((result) => {
             const suggestion = document.createElement("li");
             suggestion.classList.add("suggestion-list");

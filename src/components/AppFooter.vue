@@ -9,6 +9,7 @@ export default {
     return {
       store,
       visibleDestinations: [],
+      modules: [Autoplay],
       slider: [
         {
           icon: "client-logo-colored-01.png",
@@ -334,7 +335,7 @@ export default {
         :spaceBetween="10"
         :loop="true"
         :autoplay="{
-          delay: 1000,
+          delay: 3000,
         }"
         :breakpoints="{
           '640': {
