@@ -93,9 +93,9 @@ export default {
                         //   suggestion.style.width = "200px";
                         suggestion.textContent = result.address.freeformAddress;
                         suggestion.addEventListener("click", function() {
-                          store.userSearch = result.address.freeformAddress;
-                          suggestionsContainer.innerHTML = "";
-                          store.isChecked = true
+                        store.userSearch = result.address.freeformAddress;
+                        suggestionsContainer.innerHTML = "";
+                        store.isChecked = true
                         });
                         suggestionsContainer.appendChild(suggestion);
                     });
@@ -149,12 +149,12 @@ export default {
             </div>
             <div class="d-flex">
               <input @keyup="handleInputClick" class="form-control my-2 user-search" v-model="store.userSearch" type="text" id="first-search" placeholder="Inserisci un indirizzo qui"/>
-            <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
-              SEARCH
-            </router-link>
-            <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              SEARCH
-            </button>
+              <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
+                SEARCH
+              </router-link>
+              <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                SEARCH
+              </button>
             </div>
             
           </div>
