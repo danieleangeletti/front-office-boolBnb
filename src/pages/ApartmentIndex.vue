@@ -6,28 +6,26 @@ import { store } from "../../store.js";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
-import {Autoplay} from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 
 export default {
   data() {
     return {
       store,
-      img_carousel : 
-      [
-        'pexels-casia-charlie-2433467.jpg',
-        'pexels-christian-heitz-842711.jpg',
-        'pexels-eberhard-grossgasteiger-443446.jpg',
-        'pexels-kyle-loftus-2734428.jpg',
-        'pexels-m-venter-1659438.jpg',
-        'pexels-pixabay-36478.jpg',
-        'pexels-pixabay-247599.jpg',
-        'pexels-pixabay-237272.jpg',
-        'pexels-pixabay-261101.jpg',
+      img_carousel: [
+        "pexels-casia-charlie-2433467.jpg",
+        "pexels-christian-heitz-842711.jpg",
+        "pexels-eberhard-grossgasteiger-443446.jpg",
+        "pexels-kyle-loftus-2734428.jpg",
+        "pexels-m-venter-1659438.jpg",
+        "pexels-pixabay-36478.jpg",
+        "pexels-pixabay-247599.jpg",
+        "pexels-pixabay-237272.jpg",
+        "pexels-pixabay-261101.jpg",
       ],
-      modules : [Autoplay]
+      modules: [Autoplay],
     };
   },
   methods: {
@@ -104,31 +102,6 @@ export default {
         .then((data) => {
           suggestionsContainer.innerHTML = ""; // Svuota i suggerimenti precedenti
 
-                    data.results.forEach(result => {
-                        const suggestion = document.createElement("li");
-                        suggestion.classList.add('suggestion-list')
-                        //  suggestion.style.backgroundColor = "white"; // Applica lo stile inline
-                        //   suggestion.style.borderRadius = "10px";
-                        //   suggestion.style.padding = "4px";
-                        //   suggestion.style.listStyle = "none";
-                        //   suggestion.style.width = "200px";
-                        suggestion.textContent = result.address.freeformAddress;
-                        suggestion.addEventListener("click", function() {
-                        store.userSearch = result.address.freeformAddress;
-                        suggestionsContainer.innerHTML = "";
-                        store.isChecked = true
-                        });
-                        suggestionsContainer.appendChild(suggestion);
-                    });
-                    document.addEventListener("click", function() {
-                        
-                        suggestionsContainer.innerHTML = "";
-                    })
-                })
-                .catch(error => console.error("Errore durante il recupero dei suggerimenti:", error));
-        
-    }
-
           data.results.forEach((result) => {
             const suggestion = document.createElement("li");
             suggestion.classList.add("suggestion-list");
@@ -194,24 +167,23 @@ export default {
 <template>
   <div class="container-fluid">
     <div class="row shadow">
-      <div class="col-12 p-0 ">
+      <div class="col-12 p-0">
         <swiper
           :slidesPerView="1"
-          :spacebetween = "10"
+          :spacebetween="10"
           :loop="true"
           :pagination="{
             clickable: true,
           }"
           :autoplay="{
-            delay : 2500
+            delay: 2500,
           }"
           :modules="modules"
           class="mySwiper p-0"
         >
-          <swiper-slide  v-for="(elem, i) in img_carousel">
-            <img :src="'public/img/img-carousel/'+ elem" alt="">
+          <swiper-slide v-for="(elem, i) in img_carousel">
+            <img :src="'public/img/img-carousel/' + elem" alt="" />
           </swiper-slide>
-          
         </swiper>
       </div>
     </div>
@@ -413,5 +385,4 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 </style>
