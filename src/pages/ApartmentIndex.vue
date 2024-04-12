@@ -143,7 +143,7 @@ export default {
     <div class="row">
       <div class="col-12">
          <div class=" d-flex flex-column align-items-center"> <!-- DA SISTEMARE CENTRATURA DELLA LABEL -->
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column mt-5 ">
             <div class="px-2">
               <label for="first-search mt-2">Cerca Appartamenti entro 20km:</label>
             </div>

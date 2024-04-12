@@ -393,7 +393,7 @@ export default {
               @click="footerAdvancedSearch(elem)"
               class="text-decoration-none"
             >
-              <div class="text-dark">
+              <div class="text-dark hov-underline">
                 <strong>{{ elem.destination }}</strong>
               </div>
               <div class="text-secondary">
@@ -409,7 +409,7 @@ export default {
       <div class="row pt-5 pb-5">
         <div v-for="(elem, i) in footerList" class="col-12 col-md-4 pointer">
           <div class="mb-3">
-            <strong>{{ elem.title }}</strong>
+            <strong class="hov-underline">{{ elem.title }}</strong>
           </div>
           <div v-for="(elem, j) in footerList[i].list" class="mb-3">
             {{ elem }}
@@ -477,4 +477,32 @@ export default {
     }
   }
 }
+.hov-underline {
+        position: relative;
+        display: inline-block;
+        font-size: 1.2  rem;
+        //padding-bottom: 3px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease; /* Aggiungi una transizione fluida per l'effetto hover */
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+    /* Animazione per la sottolineatura */
+    .hov-underline::after {
+    content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0; /* Inizia senza larghezza */
+        height: 2px; /* Altezza della sottolineatura */
+        background-color: #EB5A63; 
+        transition: width 0.3s ease; /* Aggiungi una transizione fluida per l'animazione */
+        transform: scale(1.1);
+    }
+    .hov-underline:hover::after {
+        width: 100%; /* Espandi la larghezza al 100% durante l'hover */
+        
+    }
 </style>
