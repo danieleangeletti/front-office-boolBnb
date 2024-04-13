@@ -8,5 +8,6 @@ export const store = reactive({
   firstApi: null,
   isChecked: false,
   sponsoredApartments: [],
-  notSponsoredApartments:[]
+  notSponsoredApartments:[],
+  text:true
 });

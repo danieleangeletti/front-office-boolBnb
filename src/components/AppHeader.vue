@@ -69,7 +69,7 @@ export default {
                             </router-link>
                         </li>
                         <li class="nav-item mx-4">
-                            <a href="http://localhost:8000/" class="text-black text-decoration-none ">
+                            <a href="http://localhost:8000/" target="_blank" class="text-black text-decoration-none ">
                                 <span class="hov-underline">
                                     Area Personale
                                 </span>

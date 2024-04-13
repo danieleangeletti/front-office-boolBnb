@@ -4,6 +4,7 @@ import FilteredApartmentComponent from "../components/FilteredApartmentComponent
 import axios from "axios";
 import { store } from "../../store.js";
 import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
@@ -136,13 +137,28 @@ export default {
   mounted() {
     setTimeout(() => {
       this.callTheApartmentsNormal();
+   
+ 
     }, 2200);
+    gsap.registerPlugin(TextPlugin);
     gsap.from(".sponsorized", {
       x: -500,
       duration: 1,
       delay: 3,
       ease: "power4",
     });
+    if(this.store.text){
+
+      setTimeout(() =>{
+        gsap.to( '.text' ,{text:'Scegli un appartamento, ti ci portiamo noi', duration:2, ease:'linear'})
+        gsap.fromTo( '.text' ,{width:0},{width: '40%', duration:2, ease:'linear'})
+      },3000)
+      this.store.text = false
+    }
+    else{
+        gsap.to( '.text' ,{text:'Scegli un appartamento, ti ci portiamo noi', duration:2, ease:'linear'})
+        gsap.fromTo( '.text' ,{width:0},{width: '40%', duration:2, ease:'linear'})
+    }
 
     window.addEventListener("scroll", function () {
       var scrollButton = document.querySelector(".scroll-to-top");
@@ -179,11 +195,12 @@ export default {
             delay: 2500,
           }"
           :modules="modules"
-          class="mySwiper p-0"
+          class="mySwiper p-0 position-relative "
         >
           <swiper-slide v-for="(elem, i) in img_carousel">
             <img :src="'public/img/img-carousel/' + elem" alt="" />
           </swiper-slide>
+          <p class=" position-absolute text"></p>
         </swiper>
       </div>
     </div>
@@ -352,6 +369,22 @@ export default {
     transform: scale(1.1); /* Inganna l'elemento del 10% durante l'hover */
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5); /* Aggiungi ombra */
   }
+}
+
+.text{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 3;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  width: 0;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: rgba($color: #000000, $alpha: 0.5);
 }
 
 .scroll-to-top i {

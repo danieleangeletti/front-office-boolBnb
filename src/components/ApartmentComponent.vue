@@ -21,7 +21,8 @@ export default {
             <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span>
             <div class="img-box">
                 <div class="img-wrapper">
-                    <img :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
+                    <img v-if="apartment.img_cover_path" :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
+                    <img v-else class="alt-img" src="../../img/logos/boolairbnb-favicon.PNG" alt="">
                 </div>
             </div>
             <ul class="p-0 d-block">
@@ -89,7 +90,9 @@ export default {
             left: 0;
             width: 100%;
             height: 100%;
-
+            .alt-img{
+                object-fit: contain;
+            }
             img {
                 width: 100%;
                 height: 100%;
