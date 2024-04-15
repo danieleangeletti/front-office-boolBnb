@@ -46,7 +46,7 @@ export default {
   position: fixed;
   width: 100%;
   height: 100vh;
-  z-index: 3;
+  z-index: 4;
   background-color: #EC5A64;
   .gsap-logo{
    

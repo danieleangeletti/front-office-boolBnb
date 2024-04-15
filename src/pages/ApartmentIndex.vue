@@ -383,7 +383,7 @@ export default {
   left: 50%;
   transform: translate(-50%,-50%);
   z-index: 3;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   color: white;
   min-width: 0;
@@ -429,10 +429,35 @@ export default {
   .user-search {
   width: 200px;
   border-radius: 50px;
+  .text{
+   display: none;
+  }
 }
 
 #suggestions{
   width: 60%;
 }
 }
+
+@media (max-width: 768px) {
+ .text{
+   display: none;
+  }
+}
+
+@media (max-width: 992px) {
+.text{
+   width: 80%!important;
+   font-size: 0.5rem !important;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .text{
+   width: 70% !important;
+   font-size: 2rem !important;
+  }
+}
+
 </style>
