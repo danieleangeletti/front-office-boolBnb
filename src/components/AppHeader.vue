@@ -100,7 +100,7 @@ header{
     height: 80px;
     background-color: white;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     font-size: 1.2rem;
 
     .navbar-brand, .register{

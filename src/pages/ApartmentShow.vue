@@ -21,7 +21,12 @@ export default {
 methods: {
     sendMessage() {
       // Esegui la chiamata API POST
-      
+    if (this.message.name == '') {
+        this.message.name = null
+    }
+    if (this.message.last_name == '') {
+        this.message.last_name = null
+    }
       console.log('messaggio',this.message)
       axios
         .post(

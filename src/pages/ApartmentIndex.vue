@@ -135,11 +135,12 @@ export default {
     SwiperSlide,
   },
   mounted() {
-    setTimeout(() => {
-      this.callTheApartmentsNormal();
-   
- 
-    }, 2200);
+    if(this.store.text){
+    
+    }
+    else{
+      
+    }
     gsap.registerPlugin(TextPlugin);
     gsap.from(".sponsorized", {
       x: -500,
@@ -148,16 +149,21 @@ export default {
       ease: "power4",
     });
     if(this.store.text){
-
-      setTimeout(() =>{
-        gsap.to( '.text' ,{text:'Scegli un appartamento, ti ci portiamo noi', duration:2, ease:'linear'})
-        gsap.fromTo( '.text' ,{width:0},{width: '40%', duration:2, ease:'linear'})
-      },3000)
-      this.store.text = false
+        setTimeout(() => {
+        this.callTheApartmentsNormal();
+    
+  
+        }, 2200);
+        setTimeout(() =>{
+          gsap.to( '.text' ,{text:'Scegli un appartamento, ti ci portiamo noi', duration:2, ease:'linear'})
+          gsap.fromTo( '.text' ,{width:0},{width: '50%', duration:2, ease:'linear'})
+        },3000)
+        this.store.text = false
     }
     else{
+        this.callTheApartmentsNormal();
         gsap.to( '.text' ,{text:'Scegli un appartamento, ti ci portiamo noi', duration:2, ease:'linear'})
-        gsap.fromTo( '.text' ,{width:0},{width: '40%', duration:2, ease:'linear'})
+        gsap.fromTo( '.text' ,{width:0},{width: '50%', duration:2, ease:'linear'})
     }
 
     window.addEventListener("scroll", function () {
@@ -380,7 +386,7 @@ export default {
   font-size: 2.5rem;
   font-weight: 800;
   color: white;
-  width: 0;
+  min-width: 0;
   height: 100px;
   line-height: 100px;
   border-radius: 10px;
@@ -418,5 +424,15 @@ export default {
 .swiper {
   margin-left: auto;
   margin-right: auto;
+}
+@media (max-width: 575px) {
+  .user-search {
+  width: 200px;
+  border-radius: 50px;
+}
+
+#suggestions{
+  width: 60%;
+}
 }
 </style>
