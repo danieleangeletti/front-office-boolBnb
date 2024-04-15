@@ -33,7 +33,7 @@ export default {
             })
             .then(response=>{
                 this.store.services = response.data.result;
-
+                
             });
         },
            searchApartment() {
@@ -176,63 +176,103 @@ export default {
 <template>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
-            <div class="mt-3 mb-3 d-flex justify-content-center">
-                <input v-model="nRooms" class="form-control w-50" placeholder="Minimum number of rooms">
+        <!-- RICERCA AVANZATA -->
+        <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-12" >
+            <div id="advanced-search-filters">
+                <div class="mt-3 mb-3 d-flex justify-content-center">
+                    <input v-model="nRooms" class="form-control mx-1" placeholder="Numero minimo di camere">
+                    <input v-model="nBeds" class="form-control mx-1" placeholder="Numero minimo di letti">
+                </div>
+                <div class="mb-3 d-flex mx-1">
+                    <label for="radius">Cerca appartamenti in un raggio di {{ radius }}km rispetto a {{ this.store.userSearch }}:</label>
+                </div>
+                <div class="mb-3 d-flex justify-content-center mx-1">
+                    1km&nbsp&nbsp
+                    <input v-model="radius" type="range" name="radius"class="form-range" id="customRange1" min="1" max="50" step="1" >
+                    &nbsp&nbsp50km
+                </div>
+                <div class="mb-3 d-flex flex-wrap justify-content-center">
+                    <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
+                        <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
+                        <label class="form-check-label" :for="elem.id">
+                            {{ elem.type_of_service }}
+                        </label>
+                    </div> 
+                </div>
+                <div class="mb-3 d-flex justify-content-center">
+                    <button @click="advancedResearch()" type="submit" class="my-primary-button m-2">
+                        SEARCH
+                    </button>
+                </div>
+            </div>  
+        </div>
+        <!-- RICERCA INDIRIZZO SE NON CI SONO RISULTATI SULLA PRIMA SEARCH -->
+        <div v-else class="d-flex flex-column align-items-center">
+            <div  class="">
+                <div class="d-flex flex-column mt-5">
+                    <div class="px-2">
+                        <label for="first-search mt-2">
+                            Inserisci un indirizzo alternativo:
+                        </label>
+                    </div>
+                    <div class="d-flex">
+                        <input @keyup="handleInputClick" class="form-control my-2 user-search" v-model="store.userSearch" type="text" id="first-search" placeholder="Inserisci un indirizzo qui"/>
+                        <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }" @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check" >
+                            SEARCH
+                        </router-link>
+                        <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            SEARCH
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3 d-flex justify-content-center">
-                <input v-model="nBeds" class="form-control w-50" placeholder="Minimum number of beds">
-            </div>
-            <div class="mb-3 d-flex justify-content-center">
-                <input v-model="radius" type="range" class="form-range w-50" id="customRange1" min="1" max="50" step="1" >
-                <div>{{ radius }} km</div>
-            </div>
-            <div class="mb-3 d-flex flex-wrap justify-content-center">
-                <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
-                    <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
-                    <label class="form-check-label" :for="elem.id">
-                        {{ elem.type_of_service }}
-                    </label>
-                </div> 
-            </div>
-            <div class="mb-3 d-flex justify-content-center">
-                <button @click="advancedResearch()" type="submit" class="my-primary-button m-2">
-                    SEARCH
-                </button>
+            <div class="position-relative list-box">
+                <ul id="suggestions">
+                    <!--SUGGERIMENTI INDIRIZZI GENERATI DA TOMTOM-->
+                </ul>
             </div>
         </div>
-        <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap my-card">
-                <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
-            </div>
-            <div v-else class="text-center">
-                <label for="alterned-input">Inserisci un indirizzo alternativo
-                </label>
-                <input @keyup="handleInputClick" v-model="store.userSearch" class="form-control w-50" id="alterned-input" type="text">
-                    <div class="position-relative list-box">
-                        <ul id="suggestions">
-                        <!--SUGGERIMENTI INDIRIZZI GENERATI DA TOMTOM-->
-                        </ul>
+        <!-- MODALE -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Attenzione!
+                        </h1>
+                        <button ype="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                       <div class="d-flex">
-             
-                <router-link v-if="store.isChecked" :to="{ name: 'advanced-search' }"  @click="searchApartment" class="my-primary-button m-2" id="search-button-after-check">
-                    SEARCH
-                </router-link>
-                <button v-else class="my-primary-button m-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    SEARCH
-                </button>
+                    <div class="modal-body">
+                    Devi scegliere un indirizzo dalla lista dei suggerimenti
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="my-primary-button" data-bs-dismiss="modal">
+                            CHIUDI
+                        </button>
+                    </div>
                 </div>
-                <h3 class="mb-5">
-                    Non ci sono appartamenti in questa posizione, prova con un nuovo indirizzo!
-                </h3>
-                
             </div>
-            <!-- <div id="ma" class="col-6">
-      
-            </div> -->
-            <div class="scroll-to-top" @click="scrollToTop">
-                <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <!-- RISULTATI RICERCA -->
+        <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap my-card">
+            <div class="col-12 mx-4"> 
+                <h5>
+                Appartamenti in zona: {{ this.store.userSearch }}
+                </h5>
             </div>
+            <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
+        </div>
+        <div v-else >
+            <h3 class="mb-5">
+                Non ci sono appartamenti in questa posizione, prova con un nuovo indirizzo!
+            </h3>
+        </div>
+
+        <!-- SCROLL TO TOP TRIGGER ANCHOR -->
+        <div class="scroll-to-top" @click="scrollToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
       </div>
     </div>
 </template>
@@ -244,6 +284,47 @@ export default {
 #alterned-input{
     margin: 0 auto;
 }
+
+.user-search {
+  width: 400px;
+  border-radius: 50px;
+}
+
+#search-button-after-check {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+
+input[type='range']::-webkit-slider-thumb {
+    background: #ec5a64;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #ec5a64;
+    border-color: #ec5a64;
+    /* Aggiungi altri stili se necessario */
+}
+
+#advanced-search-filters {
+    width: 600px;
+    margin: 0 auto; 
+}
+.list-box {
+  width: 500px;
+  #suggestions {
+    background-color: white;
+    /* border: 1px solid #ec5a64; */
+    border-radius: 5px;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+}
+
 
 #ma{
    margin-top: 70px;
