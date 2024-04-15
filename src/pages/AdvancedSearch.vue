@@ -338,8 +338,7 @@ input[type="checkbox"]:checked {
         display: block;
     }
     #desktop-room-bed-filter {
-        display: none;
-        opacity: 0;
+        display: none !important;
     }
     #advanced-search-filters {
         width: 90%;
