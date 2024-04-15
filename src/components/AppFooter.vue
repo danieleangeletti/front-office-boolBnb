@@ -354,7 +354,7 @@ export default {
         :modules="modules"
         class="mySwiper"
       >
-        <swiper-slide v-for="(elem, i) in slider">
+        <swiper-slide class="mySwiper" v-for="(elem, i) in slider">
           <img :src="getImagePath('/img/' + elem.icon)" alt="" />
         </swiper-slide>
       </swiper>
@@ -505,5 +505,8 @@ export default {
     .hov-underline:hover::after {
         width: 100%; /* Espandi la larghezza al 100% durante l'hover */
         
+    }
+    .mySwiper{
+      background-color: #F5F5F7;
     }
 </style>

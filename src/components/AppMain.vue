@@ -20,6 +20,6 @@ export default {
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
 main{
-    padding-top: 10vh;
+    padding-top: 80px;
 }
 </style>

@@ -222,6 +222,7 @@ export default {
                 type="text"
                 id="first-search"
                 placeholder="Inserisci un indirizzo qui"
+                autocomplete="off"
               />
               <router-link
                 v-if="store.isChecked"
@@ -393,7 +394,7 @@ export default {
 // slider-top
 .swiper {
   width: 100%;
-  height: 400px;
+  height: 500px;
 }
 
 .swiper-slide {
