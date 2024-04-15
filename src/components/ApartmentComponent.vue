@@ -48,6 +48,8 @@ export default {
     padding: 20px;
     border: none!important;
     position: relative;
+
+    
     .badge{
         position: absolute;
         z-index: 1;
@@ -90,6 +92,9 @@ export default {
             left: 0;
             width: 100%;
             height: 100%;
+             overflow: hidden;
+           
+           
             .alt-img{
                 object-fit: contain;
             }
@@ -97,9 +102,17 @@ export default {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-            }
-        }
-    }
+                 transition: 0.5s transform  ease-in-out;
+                 &:hover{
+                     transform: scale(1.05);
+                    }
+                    
+                 }
+             }
+         }
+                 
+               
+                
 
     ul {
         li {
