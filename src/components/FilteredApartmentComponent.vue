@@ -29,6 +29,12 @@ export default {
                     {{apartment.price }}€ per notte.
                 </li>
                 <li>
+                    Servizi:&nbsp&nbsp 
+                    <span v-for="service in apartment.services">
+                        <i :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp&nbsp
+                    </span>
+                </li>
+                <li>
                     {{ Math.floor(apartment.distance) }}Km di distanza. 
                 </li>
             </ul>

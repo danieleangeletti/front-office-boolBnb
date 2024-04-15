@@ -178,13 +178,25 @@ export default {
       <div class="row">
         <!-- RICERCA AVANZATA -->
         <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-12" >
+            
             <div id="advanced-search-filters">
-                <div class="mt-3 mb-3 d-flex justify-content-center">
+                <h5 class="mx-1">
+                    Filtri di ricerca avanzata:
+                </h5>
+                <div class="mt-3 mb-3 d-flex justify-content-center" id="desktop-room-bed-filter">
                     <input v-model="nRooms" class="form-control mx-1" placeholder="Numero minimo di camere">
                     <input v-model="nBeds" class="form-control mx-1" placeholder="Numero minimo di letti">
                 </div>
+                <div id="mobile-room-bed-filter">
+                    <div class="mt-3 mb-3 d-flex justify-content-center">
+                        <input v-model="nRooms" class="form-control mx-1" placeholder="Numero minimo di camere">
+                    </div>
+                    <div class="mt-3 mb-3 d-flex justify-content-center">
+                        <input v-model="nBeds" class="form-control mx-1" placeholder="Numero minimo di letti">
+                    </div>
+                </div>
                 <div class="mb-3 d-flex mx-1">
-                    <label for="radius">Cerca appartamenti in un raggio di {{ radius }}km rispetto a {{ this.store.userSearch }}:</label>
+                    <label for="radius">Appartamenti in un raggio di {{ radius }}km rispetto a {{ this.store.userSearch }}:</label>
                 </div>
                 <div class="mb-3 d-flex justify-content-center mx-1">
                     1km&nbsp&nbsp
@@ -195,11 +207,11 @@ export default {
                     <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
                         <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
                         <label class="form-check-label" :for="elem.id">
-                            {{ elem.type_of_service }}
+                            <i :class="'fa-solid'  + ' '  + elem.icon"></i>&nbsp&nbsp{{ elem.type_of_service }}
                         </label>
                     </div> 
                 </div>
-                <div class="mb-3 d-flex justify-content-center">
+                <div class=" d-flex justify-content-center">
                     <button @click="advancedResearch()" type="submit" class="my-primary-button m-2">
                         SEARCH
                     </button>
@@ -263,7 +275,7 @@ export default {
             </div>
             <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
         </div>
-        <div v-else >
+        <div v-else class="text-center my-5">
             <h3 class="mb-5">
                 Non ci sono appartamenti in questa posizione, prova con un nuovo indirizzo!
             </h3>
@@ -295,7 +307,6 @@ export default {
   padding-bottom: 5px;
 }
 
-
 input[type='range']::-webkit-slider-thumb {
     background: #ec5a64;
 }
@@ -306,10 +317,40 @@ input[type="checkbox"]:checked {
     /* Aggiungi altri stili se necessario */
 }
 
-#advanced-search-filters {
-    width: 600px;
-    margin: 0 auto; 
+@media (min-width: 720px) {
+    #mobile-room-bed-filter {
+        display: none;
+    }
+    #desktop-room-bed-filter {
+        display: block;
+    }
+    #advanced-search-filters {
+        width: 720px;
+        margin: 0 auto; 
+        background-color: #fff;
+        padding: 16px 60px 10px 60px;
+        border-radius: 20px;    
+    }
 }
+
+@media (max-width: 720px) {
+    #mobile-room-bed-filter {
+        display: block;
+    }
+    #desktop-room-bed-filter {
+        display: none;
+        opacity: 0;
+    }
+    #advanced-search-filters {
+        width: 90%;
+        margin: 0 auto; 
+        background-color: #fff;
+        padding: 6px 10px 6px 10px;
+        border-radius: 10px;    
+    }
+}
+
+
 .list-box {
   width: 500px;
   #suggestions {
