@@ -174,7 +174,7 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
       <div class="row">
         <!-- RICERCA AVANZATA -->
         <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-12" >
@@ -196,7 +196,7 @@ export default {
                     </div>
                 </div>
                 <div class="mb-3 d-flex mx-1">
-                    <label for="radius">Appartamenti in un raggio di {{ radius }}km rispetto a {{ this.store.userSearch }}:</label>
+                    <label for="radius">Appartamenti in un raggio di {{ radius }} km rispetto a {{ this.store.userSearch }}:</label>
                 </div>
                 <div class="mb-3 d-flex justify-content-center mx-1">
                     1km&nbsp&nbsp
@@ -317,7 +317,7 @@ input[type="checkbox"]:checked {
     /* Aggiungi altri stili se necessario */
 }
 
-@media (min-width: 720px) {
+@media (min-width: 680px) {
     #mobile-room-bed-filter {
         display: none;
     }
@@ -325,15 +325,15 @@ input[type="checkbox"]:checked {
         display: block;
     }
     #advanced-search-filters {
-        width: 720px;
+        width: 680px;
         margin: 0 auto; 
         background-color: #fff;
-        padding: 16px 60px 10px 60px;
+        padding: 32px 60px 24px 60px;
         border-radius: 20px;    
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 680px) {
     #mobile-room-bed-filter {
         display: block;
     }
@@ -344,7 +344,7 @@ input[type="checkbox"]:checked {
         width: 90%;
         margin: 0 auto; 
         background-color: #fff;
-        padding: 6px 10px 6px 10px;
+        padding: 16px 10px 6px 10px;
         border-radius: 10px;    
     }
 }

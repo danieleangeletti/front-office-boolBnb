@@ -15,35 +15,46 @@ export default {
 }
 </script>
 
+
 <template>
     <div class="my-card">
         <router-link class="link" :to="{name:'apartment-show', params: { slug: apartment.slug }}">
-            <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span>
-            <div class="img-box">
-                <div class="img-wrapper">
-                    <img v-if="apartment.img_cover_path" :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
-                    <img v-else class="alt-img" src="../../img/logos/boolairbnb-favicon.PNG" alt="">
+            <div  id="apartment-card">
+                <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span>
+                <div class="img-box">
+                    <div class="img-wrapper">
+                        <img v-if="apartment.img_cover_path" :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
+                        <img v-else class="alt-img" src="../../img/logos/boolairbnb-favicon.PNG" alt="">
+                    </div>
+                </div>
+                <div  id="apartment-details">
+                    <ul class="p-0 d-block mt-2">
+                        <li class="title">
+                            {{ apartment.name }}
+                        </li>
+                        <li>
+                            Prezzo: {{apartment.price }}€ per notte.
+                        </li>
+                        <li>
+                            Servizi:&nbsp&nbsp 
+                            <span v-for="service in apartment.services">
+                                <i :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp&nbsp
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <ul class="p-0 d-block">
-                <li class="title">
-                    {{ apartment.name }}
-                </li>
-                <li>
-                    {{apartment.price }}€ per notte.
-                </li>
-                <li>
-                    <!-- BADGE PER SPONSORSHIP -->
-                </li>
-            </ul>
+            
+            
         </router-link>
     </div> 
 
 </template>
 
 <style lang="scss" scoped>
+
+
 .my-card {
-    //width: calc(100% / 4);
     margin-top: 50px;
     padding: 20px;
     border: none!important;
@@ -52,6 +63,8 @@ export default {
     
     .badge{
         position: absolute;
+        color: #fff !important;
+        background-color: #ec5a64 !important;
         z-index: 1;
         top: 7%;
         left: 10%;
@@ -66,18 +79,22 @@ export default {
 
     }
     .title{
-        font-weight: 600;
+        font-weight: 700;
     }
     .link {
         color: black;
         text-decoration: none;
     }
 
-    .night {
-        font-size: 0.9rem;
-        color: gray;
-        text-decoration: underline;
+    #apartment-card {
+        background-color: #fff;
+        border-radius: 20px
     }
+
+    #apartment-details {
+        padding: 10px 12px 4px 12px;
+    }
+
 
     .img-box {
         position: relative;
