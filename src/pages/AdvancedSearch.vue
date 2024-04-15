@@ -268,10 +268,10 @@ export default {
         
         <!-- RISULTATI RICERCA -->
         <div  v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col d-flex flex-wrap my-card">
-            <div class="col-12 mx-4"> 
-                <h5>
+            <div class="col-12 text-center"> 
+                <h4>
                 Appartamenti in zona: {{ this.store.userSearch }}
-                </h5>
+                </h4>
             </div>
             <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
         </div>

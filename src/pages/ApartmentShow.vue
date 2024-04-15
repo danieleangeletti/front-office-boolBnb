@@ -216,6 +216,14 @@ methods: {
                 <!-- se il messaggio é stato inviato si applica la classe green form -->
                 <form class="p-3" @submit.prevent>
                     <div class="row">
+                        <div class="text-center mb-4">
+                            <h3>
+                                Compila il nostro breve modulo di contatto qui sotto!
+                            </h3>
+                            <h6>
+                                Il proprietario sarà lieto di rispondere alle tue domande e fornirti tutte le informazioni necessarie.
+                            </h6>
+                        </div>
                         <div class="col-12 col-sm-6 mb-3">
                             <label for="name">Il tuo nome</label>
                             <input class="form-control" type="text" v-model="message.name" name="name" id="name"  maxlength="100">
@@ -381,7 +389,8 @@ ul {
     img {
         border-radius: 5px;
         width: 100%;
-        height: 100%;
+        object-fit: cover;
+        height: 600px;
     }
 }
 

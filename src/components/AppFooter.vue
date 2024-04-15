@@ -355,7 +355,7 @@ export default {
         class="mySwiper"
       >
         <swiper-slide class="mySwiper" v-for="(elem, i) in slider">
-          <img :src="getImagePath('/img/' + elem.icon)" alt="" />
+          <img :src="getImagePath('/img/' + elem.icon)" alt=""  id="carousel-sponsorship"/>
         </swiper-slide>
       </swiper>
     </div>
@@ -477,6 +477,10 @@ export default {
       border-bottom: 3px solid black;
     }
   }
+}
+
+#carousel-sponsorship {
+  width: 120px;
 }
 .hov-underline {
         position: relative;
