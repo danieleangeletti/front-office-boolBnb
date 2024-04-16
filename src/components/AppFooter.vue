@@ -423,7 +423,7 @@ export default {
       <div class="row">
         <div class="col-12 col-md-auto">
           <div class="d-md-flex justify-content-md-end">
-            <span class="pe-1"> © 2024 Airbnb, Inc. </span>
+            <span class="pe-1"> © 2024 Boolbnb, Inc. </span>
             <span class="ps-1 pe-1"> · </span>
             <span class="pointer ps-1 pe-1"> Privacy </span>
             <span class="ps-1 pe-1"> · </span>
@@ -485,7 +485,7 @@ export default {
 .hov-underline {
         position: relative;
         display: inline-block;
-        font-size: 1.2  rem;
+        font-size: 1.2 rem;
         //padding-bottom: 3px;
         cursor: pointer;
         border-bottom: 2px solid transparent;
