@@ -294,13 +294,14 @@ export default {
       this.visibleDestinations.push(this.destinationsObjs[this.activeIndex]);
     },
     footerAdvancedSearch(obj) {
+      this.store.userSearch = obj.destination
       axios
         // Faccio la prima chiamata API a tomtom e faccio trasformare l'input dell'utente in latitudine e longitudine
         .get(
           "https://api.tomtom.com/search/2/geocode/.json?key=03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
           {
             params: {
-              query: obj.destination,
+              query: this.store.userSearch,
             },
           }
         )
