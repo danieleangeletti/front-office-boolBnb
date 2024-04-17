@@ -81,6 +81,23 @@ export default {
             })
             .then((response) => {
               this.store.FilteredApartments = response.data.result;
+              console.log(this.store.FilteredApartments)
+            for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+              if (
+                this.store.FilteredApartments[i].sponsorships.length > 0 &&
+                this.store.FilteredApartments[i].availability == 1
+              ) {
+                this.store.sponsoredFilteredApartments.push(this.store.FilteredApartments[i]);
+              }
+            }
+            for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+              if (
+                this.store.FilteredApartments[i].sponsorships.length == 0 &&
+                this.store.FilteredApartments[i].availability == 1
+              ) {
+                this.store.unSponsoredFilteredApartments.push(this.store.FilteredApartments[i]);
+              }
+            }
             });
         });
     },

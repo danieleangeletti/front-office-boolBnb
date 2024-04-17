@@ -5,6 +5,7 @@ import AppHeader from '../components/AppHeader.vue';
 import AppMain from '../components/AppMain.vue';
 import AppFooter from '../components/AppFooter.vue';
 import FilteredApartmentComponent from '../components/FilteredApartmentComponent.vue';
+import FIlterSponsoredComponent from '../components/FIlterSponsoredComponent.vue';
 export default {
     data() {
         return {
@@ -120,7 +121,24 @@ export default {
           }
         ).then((response) => {
             this.store.FilteredApartments = response.data.result;
-            
+            this.store.sponsoredFilteredApartments = [];
+            this.store.unSponsoredFilteredApartments = [];
+            for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+              if (
+                this.store.FilteredApartments[i].sponsorships.length > 0 &&
+                this.store.FilteredApartments[i].availability == 1
+              ) {
+                this.store.sponsoredFilteredApartments.push(this.store.FilteredApartments[i]);
+              }
+            }
+            for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+              if (
+                this.store.FilteredApartments[i].sponsorships.length == 0 &&
+                this.store.FilteredApartments[i].availability == 1
+              ) {
+                this.store.unSponsoredFilteredApartments.push(this.store.FilteredApartments[i]);
+              }
+            }
             console.log(response);
         })
         setTimeout(()=>{
@@ -261,7 +279,8 @@ export default {
         });
     },
     components:{
-        FilteredApartmentComponent
+        FilteredApartmentComponent,
+        FIlterSponsoredComponent
     },
 }
 </script>
@@ -371,7 +390,8 @@ export default {
                 Appartamenti in zona: {{ this.store.userSearch }}
                 </h4>
             </div>
-            <FilteredApartmentComponent v-for="(elem,j) in store.FilteredApartments" :apartment="elem" :key="j"/>
+            <FIlterSponsoredComponent v-for="(sponsor, j) in store.sponsoredFilteredApartments" :apartment="sponsor" :key="j"/>
+            <FilteredApartmentComponent v-for="(elem, k) in store.unSponsoredFilteredApartments" :apartment="elem" :key="k"/>
         </div>
         <div v-else class="text-center my-5">
             <h3 class="mb-5">
