@@ -294,7 +294,7 @@ export default {
                     </div>
                 </div>
                 <div class="mb-3 d-flex mx-1">
-                    <label for="radius">Appartamenti in un raggio di {{ radius }} km rispetto a {{ this.store.userSearch }}:</label>
+                    <label for="radius">Appartamenti in un raggio di <span id="search-radius">{{ radius }} km</span> rispetto a {{ this.store.userSearch }}:</label>
                 </div>
                 <div class="mb-3 d-flex justify-content-center mx-1">
                     1km&nbsp&nbsp
@@ -404,6 +404,12 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+#search-radius {
+    color: #ec5a64;
+    font-weight: 600;
+}
+
 
 input[type='range']::-webkit-slider-thumb {
     background: #ec5a64;
