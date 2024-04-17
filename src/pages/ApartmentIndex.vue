@@ -82,6 +82,8 @@ export default {
             .then((response) => {
               this.store.FilteredApartments = response.data.result;
               console.log(this.store.FilteredApartments)
+               this.store.sponsoredFilteredApartments = [];
+            this.store.unSponsoredFilteredApartments = [];
             for (let i = 0; i < this.store.FilteredApartments.length; i++) {
               if (
                 this.store.FilteredApartments[i].sponsorships.length > 0 &&
