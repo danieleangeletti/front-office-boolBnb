@@ -120,35 +120,131 @@ export default {
           }
         ).then((response) => {
             this.store.FilteredApartments = response.data.result;
-                // let map = this.myMap
-                // let markerElement = null
-                // for (let i = 0; i < this.store.FilteredApartments.length; i++) {
-                //       var  marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).addTo(map)
-                       
-                //     markerElement = marker.getElement();
-                //     markerElement.className = 'apartment-marker';
-                //     markerElement.innerHTML = `
-                //     <img style="width: 50px" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
-                //     <div class="marker-content">
-                //         <h3>${this.store.FilteredApartments[i].name}</h3>
-                //         <p>${this.store.FilteredApartments[i].free_form_address}</p>
-                //     </div>
-                //     `;
-                //     this.map.on('load',() => {
-                //         marker
-                //         })
-                // }
+            
             console.log(response);
         })
+        setTimeout(()=>{
+                this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
+                this.myMap = tt.map({
+                    key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+                    container:"ma",
+                    center:this.center,
+                    zoom:10
+                })
+                let map = this.myMap
+                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+                    var markerHeight = 50, markerRadius = 10, linearOffset = 25;
+                    var popupOffsets = {
+                    'top': [0, 0],
+                    'top-left': [0,0],
+                    'top-right': [0,0],
+                    'bottom': [0, -markerHeight],
+                    'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                    'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                    };
+                    var popup = new tt.Popup({offset: popupOffsets})
+                    popup.setHTML(`
+                          <div style="width:200px; height:150px; object-fit: contain;" class="popup-box mt-2 ">
+                            <img style="width:100%; height:100%; border-radius:10px;" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+                          </div>
+                          <div style="width:200px" class="mt-3 marker-content text-center">
+                            <h5 class="m-0 ">Appartamento: ${this.store.FilteredApartments[i].name}</h5>
+                            <div>${this.store.FilteredApartments[i].address}</div>
+                          </div>
+                      `);
+                     
+                     popup.addClassName('popup-box');
+                    var marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).setPopup(popup).addTo(map)
+                    
+                    var markerElement = marker.getElement();
+                        markerElement.style.backgroundColor = 'white';
+                        markerElement.style.width = '80px';
+                        markerElement.style.height = '20px';
+                        markerElement.style.lineHeight = '20px';
+                        markerElement.style.verticalAlign = 'middle';
+                        markerElement.style.textAlign = 'center';
+                        markerElement.style.borderRadius = '20px';
+                        markerElement.style.borderStyle = 'solid';
+                        markerElement.style.borderWidth = '1px';
+                        markerElement.style.borderColor = 'lightgray';
+
+                    markerElement.innerHTML = Math.floor(this.store.FilteredApartments[i].price) +'€'
+                    map.on('load',() => {
+                        marker,
+                        popup
+                        })
+                    }
+            },1000)
         },
-        
+         scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth" // Puoi impostare questo su "smooth" per avere uno scorrimento fluido, o "auto" per uno scorrimento istantaneo
+                });
+            }
     },
     // updated(){
     //     this.initializeMap();
     // },
     mounted(){
+        this.scrollToTop()
         this.callTheServices();
-
+       
+        setTimeout(()=>{
+                this.center = [this.store.firstApi.lon,this.store.firstApi.lat]
+                this.myMap = tt.map({
+                    key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
+                    container:"ma",
+                    center:this.center,
+                    zoom:10
+                })
+                let map = this.myMap
+                for (let i = 0; i < this.store.FilteredApartments.length; i++) {
+                    var markerHeight = 50, markerRadius = 10, linearOffset = 25;
+                    var popupOffsets = {
+                    'top': [0, 0],
+                    'top-left': [0,0],
+                    'top-right': [0,0],
+                    'bottom': [0, -markerHeight],
+                    'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                    'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                    };
+                    var popup = new tt.Popup({offset: popupOffsets})
+                    popup.setHTML(`
+                          <div style="width:200px; height:150px; object-fit: contain;" class="popup-box mt-2 ">
+                            <img style="width:100%; height:100%; border-radius:10px;" src="http://127.0.0.1:8000/storage/${this.store.FilteredApartments[i].img_cover_path}" alt="Apartment Image">
+                          </div>
+                          <div style="width:200px" class="mt-3 marker-content text-center">
+                            <h5 class="m-0 ">Appartamento: ${this.store.FilteredApartments[i].name}</h5>
+                            <div>${this.store.FilteredApartments[i].address}</div>
+                          </div>
+                      `);
+                     
+                     popup.addClassName('popup-box');
+                    var marker = new tt.Marker().setLngLat({lng:this.store.FilteredApartments[i].longitude,lat:this.store.FilteredApartments[i].latitude}).setPopup(popup).addTo(map)
+                    
+                    var markerElement = marker.getElement();
+                    markerElement.style.backgroundColor = 'white';
+                    markerElement.style.width = '80px';
+                    markerElement.style.height = '20px';
+                    markerElement.style.lineHeight = '20px';
+                    markerElement.style.verticalAlign = 'middle';
+                    markerElement.style.textAlign = 'center';
+                    markerElement.style.borderRadius = '20px';
+                    markerElement.style.borderStyle = 'solid';
+                    markerElement.style.borderWidth = '1px';
+                    markerElement.style.borderColor = 'lightgray';
+                    markerElement.innerHTML =  Math.floor(this.store.FilteredApartments[i].price) +'€'
+                    map.on('load',() => {
+                        marker,
+                        popup
+                        })
+                    }
+            },1000)
         window.addEventListener('scroll', function() {
             var scrollButton = document.querySelector('.scroll-to-top');
             if (window.scrollY > 100) {
@@ -164,20 +260,22 @@ export default {
             });
         });
     },
-      
-    
-   
     components:{
         FilteredApartmentComponent
     },
 }
 </script>
+      
+    
+   
 
 <template>
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
       <div class="row">
+        <!-- MAPPA RICERCA AVANZATA -->
+        <div class="col-12 my-5" id="ma"></div>
         <!-- RICERCA AVANZATA -->
-        <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-12" >
+        <div v-if="store.FilteredApartments && store.FilteredApartments.length > 0" class="col-12  " >
             
             <div id="advanced-search-filters">
                 <h5 class="mx-1">
@@ -205,7 +303,7 @@ export default {
                 </div>
                 <div class="mb-3 d-flex flex-wrap justify-content-center">
                     <div v-for="(elem, i) in store.services"  class="form-check me-3" :key="i">
-                        <input v-model="services" class="form-check-input" type="checkbox" :value="elem.type_of_service" :id="elem.id">
+                        <input v-model="services" class="form-check-input m-2 " type="checkbox" :value="elem.type_of_service" :id="elem.id">
                         <label class="form-check-label" :for="elem.id">
                             <i :class="'fa-solid'  + ' '  + elem.icon"></i>&nbsp&nbsp{{ elem.type_of_service }}
                         </label>
@@ -325,7 +423,7 @@ input[type="checkbox"]:checked {
         display: block;
     }
     #advanced-search-filters {
-        width: 680px;
+        max-width: 680px;
         margin: 0 auto; 
         background-color: #fff;
         padding: 32px 60px 24px 60px;
@@ -367,19 +465,27 @@ input[type="checkbox"]:checked {
 
 
 #ma{
-   margin-top: 70px;
-    height: 800px;
-    border-radius: 20px;
+  
+    height: 400px;
+    border-radius: 40px;
     .marker-content{
         width: 50px;
-        border-radius: 10px;
+        border-radius: 20px;
         background-color: white!important;
         img{
             width: 100%;
         }
     }
 }
-
+.custom-marker {
+  background-color: white;
+  width: 70px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px;
+}
 .my-primary-button {
     @include primary-button-styles;
 }

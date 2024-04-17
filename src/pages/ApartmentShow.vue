@@ -73,12 +73,19 @@ methods: {
             key:"03zxGHB5yWE9tQEW9M7m9s46vREYKHct",
             container:"map",
             center:center,
-            zoom:13
+            zoom:14
         })
+        map.scrollZoom.disable( );
         map.on('load',() => {
             new tt.Marker().setLngLat(center).addTo(map)
         })
-    }
+    },
+       scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth" // Puoi impostare questo su "smooth" per avere uno scorrimento fluido, o "auto" per uno scorrimento istantaneo
+                });
+            }
 },
 
     created() {
@@ -94,6 +101,7 @@ methods: {
         });
     },
     mounted(){
+        this.scrollToTop();
         this.initMap();
         fetch('https://api.ipify.org?format=json')
         .then(x => x.json())

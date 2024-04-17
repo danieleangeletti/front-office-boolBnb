@@ -88,7 +88,7 @@ export default {
 
     #apartment-card {
         background-color: #fff;
-        border-radius: 20px
+        border-radius: 20px;
     }
 
     #apartment-details {
