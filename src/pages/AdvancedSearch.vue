@@ -473,7 +473,6 @@ input[type="checkbox"]:checked {
 #ma{
   
     height: 400px;
-    border-radius: 40px;
     .marker-content{
         width: 50px;
         border-radius: 20px;
