@@ -10,17 +10,17 @@ export default {
     },
     props:{
         apartment:Object
-    }
-     
+    } 
 }
 </script>
 
-
 <template>
+    
     <div class="my-card">
         <router-link class="link" :to="{name:'apartment-show', params: { slug: apartment.slug }}">
             <div  id="apartment-card">
-                <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span>
+                <!-- SPONSORSHIP PILL -->
+                <!-- <span v-if="apartment.sponsorships.length > 0" class="badge rounded-pill text-bg-light">In evidenza</span> -->
                 <div class="img-box">
                     <div class="img-wrapper">
                         <img v-if="apartment.img_cover_path" :src="'http://127.0.0.1:8000/storage/'+apartment.img_cover_path" alt="Cover Image">
@@ -38,29 +38,35 @@ export default {
                         <li>
                             Servizi:&nbsp&nbsp 
                             <span v-for="service in apartment.services">
-                                <i id="icon-service" :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp
+                                <i :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp&nbsp
                             </span>
+                        </li>
+                         <li v-if="Math.floor(apartment.distance) != 0">
+                            A {{ apartment.distance.toFixed(1) }} km di distanza. 
+                        </li>
+                        <li v-else>
+                            A {{ apartment.distance }},5 km di distanza. 
                         </li>
                     </ul>
                 </div>
             </div>
-            
-            
         </router-link>
-    </div> 
-
+    </div>
 </template>
+                
+            
+
 
 <style lang="scss" scoped>
+@use "../assets/scss/main.scss" as *;
 
 
-.my-card {
+.my-card{
     margin-top: 50px;
     padding: 20px;
-    border: none!important;
+    border:none!important;
     position: relative;
 
-    
     .badge{
         position: absolute;
         color: #fff !important;
@@ -78,9 +84,11 @@ export default {
         border: 1px solid lightgray;
 
     }
+
     .title{
         font-weight: 700;
     }
+
     .link {
         color: black;
         text-decoration: none;
@@ -88,11 +96,16 @@ export default {
 
     #apartment-card {
         background-color: #fff;
-        border-radius: 20px;
+        border-radius: 20px
     }
 
     #apartment-details {
         padding: 10px 12px 4px 12px;
+    }
+
+    .link{
+        color: black;
+        text-decoration: none;
     }
 
 
@@ -127,12 +140,10 @@ export default {
                  }
              }
          }
-                 
-               
-                
 
-    ul {
-        li {
+
+    ul{
+        li{
             list-style: none;
         }
     }
@@ -164,7 +175,4 @@ export default {
         width: calc(100% / 5);
     }
 }
-// #icon-service{
-//  font-size: 10px;
-// }
 </style>

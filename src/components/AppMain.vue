@@ -13,10 +13,13 @@ export default {
 
 <template>
     <main>
-        MAIN
+        <router-view></router-view>
     </main>
 </template>
 
 <style lang="scss" scoped>
 @use "../assets/scss/main.scss" as *;
+main{
+    padding-top: 80px;
+}
 </style>
