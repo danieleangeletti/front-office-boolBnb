@@ -38,7 +38,7 @@ export default {
                         <li>
                             Servizi:&nbsp&nbsp 
                             <span v-for="service in apartment.services">
-                                <i :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp&nbsp
+                                <i id="icon-service" :class="'fa-solid'  + ' '  + service.icon"></i>&nbsp
                             </span>
                         </li>
                     </ul>
@@ -164,4 +164,7 @@ export default {
         width: calc(100% / 5);
     }
 }
+// #icon-service{
+//  font-size: 10px;
+// }
 </style>
